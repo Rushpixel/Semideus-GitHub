@@ -1,0 +1,23 @@
+package com.Fluffeater.semideus.Graphics;
+
+public class Animation {
+
+	public static Sprite[] devideSheet(SpriteSheet sheet, int wsize, int hsize,int xoffset, int yoffset) {
+		Sprite[] sprites = new Sprite[(sheet.wSIZE / wsize) * (sheet.hSIZE / hsize)];
+		for (int ix = 0; ix < sheet.wSIZE / wsize; ix++) {
+			for (int iy = 0; iy < sheet.hSIZE / hsize; iy++) {
+				sprites[ix + iy*(sheet.wSIZE / wsize)] = new Sprite(wsize, hsize, ix * wsize, iy * hsize,xoffset, yoffset, sheet);
+			}
+		}
+		return sprites;
+	}
+	
+	public static Sprite replaceSpriteC(int oldC, int newC, Sprite sprite) {
+		Sprite nsprite = new Sprite(sprite.wSIZE,sprite.hSIZE,sprite.xoffset,sprite.yoffset,sprite.pixels.clone());
+		for(int i = 0; i < nsprite.pixels.length; i++){
+			if(nsprite.pixels[i] == oldC) nsprite.pixels[i] = newC;
+		}
+		return nsprite;
+	}
+
+}

@@ -1,0 +1,31 @@
+package com.Fluffeater.semideus.Instance;
+
+import com.Fluffeater.semideus.Inventory;
+import com.Fluffeater.semideus.Items.Item;
+import com.Fluffeater.semideus.World.Collision;
+
+public class ItemHusk extends Instance {
+
+	public Item item;
+
+	public ItemHusk(int x, int y, Item item) {
+		super(x, y);
+		this.item = item;
+		sprite = item.sprite;
+	}
+
+	public void init() {
+		solid = true;
+		x1 = 0;
+		y1 = -8;
+		x2 = 8;
+		y2 = 0;
+	}
+	
+	public void update(){
+		if(Collision.hasHit(col, InstanceList.instList.get(0).col)){
+			Inventory.pickup(item,this);
+		}
+	}
+
+}

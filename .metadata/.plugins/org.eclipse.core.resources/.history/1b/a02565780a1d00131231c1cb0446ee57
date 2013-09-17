@@ -1,0 +1,11 @@
+package com.Fluffeater.semideus.Items;
+
+public class Jacket extends Item{
+	
+	public int armor = 1;
+
+	public Jacket(int type) {
+		super(type);
+	}
+	
+}

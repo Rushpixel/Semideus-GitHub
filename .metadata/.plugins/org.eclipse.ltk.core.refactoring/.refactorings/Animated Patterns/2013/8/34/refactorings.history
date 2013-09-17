@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;Semideus/src/com.Fluffeater.semideus.colour&apos;&#x0A;- Original project: &apos;Animated Patterns&apos;&#x0A;- Destination element: &apos;Semideus/src/com.Fluffeater.semideus.colour&apos;&#x0A;- Original elements:&#x0A;     com.Fluffeater.animatedpattern.Screen.java&#x0A;     com.Fluffeater.animatedpattern.Engine.java" description="Copy compilation units" destination="=Semideus/src&lt;com.Fluffeater.semideus.colour" element1="/src&lt;com.Fluffeater.animatedpattern{Screen.java" element2="/src&lt;com.Fluffeater.animatedpattern{Engine.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1377318148136" units="2" version="1.0"/>
+</session>

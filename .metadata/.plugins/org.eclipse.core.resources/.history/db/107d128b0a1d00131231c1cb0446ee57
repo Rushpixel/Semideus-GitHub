@@ -1,0 +1,56 @@
+package com.Fluffeater.semideus.Tiles;
+
+import java.io.Serializable;
+
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.World.Collision;
+import com.Fluffeater.semideus.World.Hitbox;
+
+public abstract class Tile implements Serializable {
+
+	public Sprite sprite;
+
+	public int x;
+	public int y;
+	public int mapC = 0x000000;
+
+	// the parameter of it's hit box
+	public int x1 = 0;
+	public int y1 = 0;
+	public int x2 = 0;
+	public int y2 = 0;
+
+	public Hitbox col;
+
+	public boolean tall = false; // can bullets move through it
+	public boolean solid = false; // can objects move through it
+
+	public Tile(int x, int y) {
+		this.x = x;
+		this.y = y;
+		init();
+		if (tall || solid) col = Collision.addMap(x, y, x1, y1, x2, y2, -1, tall, solid, false);
+	}
+
+	public void init() {
+
+	}
+
+	public void removeCol() {
+		if (tall || solid) Collision.HitboxList.remove(col);
+	}
+
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	public void render() {
+		SpriteList.setDraw(x, y, getSprite());
+	}
+
+	public int getColour() {
+		return mapC;
+	}
+
+}

@@ -1,0 +1,54 @@
+package com.Fluffeater.Archsia.World;
+
+import com.Fluffeater.Archsia.Camera;
+import com.Fluffeater.Archsia.Graphics.SpriteList;
+import com.Fluffeater.Archsia.Graphics.screen;
+import com.Fluffeater.Archsia.Tiles.Tile;
+
+public class Map {
+
+	public Tile[][] tiles;
+	public int x, y;
+	public boolean generated = false;
+	public int type;
+	// type 0 = horizontal
+	// type 1 = vertical
+	// type 2 = cross road
+	// type 3 = top-left corner
+	// type 4 = top-right corner
+	// type 5 = bottom-left corner
+	// type 6 = bottom-right corner
+	// type 7 = top T intersect
+	// type 8 = left T intersect
+	// type 9 = bottom T intersect
+	// type 10 = right T intersect
+	
+	public Generate generate = new Generate();
+
+	public Map(int x, int y, int type) {
+		this.x = x;
+		this.y = y;
+		this.type = type;
+	}
+
+	public void render() {
+		if (generated) {
+			for (int iy = 0; iy < 16; iy++) {
+				for (int ix = 0; ix < 16; ix++) {
+					SpriteList.setDraw(tiles[ix][iy].x, tiles[ix][iy].y, tiles[ix][iy].sprite);
+				}
+			}
+		}else{
+			if(x >= Camera.x || x <= Camera.x + screen.width && y >= Camera.y || y <= Camera.y + screen.width){
+				tiles = generate.build(x, y);
+				generated = true;
+			}
+		}
+	}
+
+	public void generate() {
+		if (!generated) {
+			tiles = generate.build(x, y);
+		}
+	}
+}

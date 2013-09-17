@@ -1,0 +1,68 @@
+package com.Fluffeater.semideus.colour;
+
+import java.awt.Color;
+
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Graphics.StaticSprites;
+
+public class MoodLight {
+	/*
+	 * Copyright Endoplasm Gaming 2013 Do not distribute
+	 */
+
+	public static int roadHue = 150;
+	public static int roadtimer = 100;
+	public static boolean roaddirection = true;
+	
+	public static int paveHue = 270;
+	public static int pavetimer = 500;
+	public static boolean pavedirection = true;
+	
+
+	public static void update() {
+		road();
+		pavement();
+	}
+	
+	public static void road(){
+		if (roadtimer >= 53) {
+			roadHue = roaddirection ? roadHue + 1 : roadHue - 1;
+			if (roadHue > 320) roaddirection = false;
+			if (roadHue < 150) roaddirection = true;
+			roadtimer = 0;
+			StaticSprites.staticsprites[0] = Animation.replaceSpriteC(new Color(35, 34, 124).getRGB(), Color.HSBtoRGB(roadHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[0]);
+			StaticSprites.staticsprites[1] = Animation.replaceSpriteC(new Color(35, 34, 124).getRGB(), Color.HSBtoRGB(roadHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[1]);
+			StaticSprites.staticsprites[2] = Animation.replaceSpriteC(new Color(35, 34, 124).getRGB(), Color.HSBtoRGB(roadHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[2]);
+			StaticSprites.staticsprites[3] = Animation.replaceSpriteC(new Color(35, 34, 124).getRGB(), Color.HSBtoRGB(roadHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[3]);
+			StaticSprites.staticsprites[3] = Animation.replaceSpriteC(new Color(36, 31, 87).getRGB(), Color.HSBtoRGB(roadHue / 360f, .64f, .34f), StaticSprites.staticsprites[3]);
+		}
+		roadtimer++;
+	}
+	
+	public static void pavement(){
+		if (pavetimer >= 83) {
+			paveHue = pavedirection ? paveHue + 1 : paveHue - 1;
+			if (paveHue > 375) pavedirection = false;
+			if (paveHue < 270) pavedirection = true;
+			pavetimer = 0;
+			StaticSprites.staticsprites[4] = Animation.replaceSpriteC(new Color(74, 27, 114).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[4]);
+			StaticSprites.staticsprites[4] = Animation.replaceSpriteC(new Color(50, 18, 77).getRGB(), Color.HSBtoRGB(paveHue / 360f, .77f, .30f), StaticSprites.staticsprites[4]);
+			StaticSprites.staticsprites[5] = Animation.replaceSpriteC(new Color(74, 27, 114).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[5]);
+			StaticSprites.staticsprites[5] = Animation.replaceSpriteC(new Color(50, 18, 77).getRGB(), Color.HSBtoRGB(paveHue / 360f, .77f, .30f), StaticSprites.staticsprites[5]);
+			StaticSprites.staticsprites[5] = Animation.replaceSpriteC(new Color(61, 16, 96).getRGB(), Color.HSBtoRGB(paveHue / 360f, .83f, .38f), StaticSprites.staticsprites[5]);
+			StaticSprites.staticsprites[5] = Animation.replaceSpriteC(new Color(40, 16, 59).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .23f), StaticSprites.staticsprites[5]);
+			StaticSprites.staticsprites[6] = Animation.replaceSpriteC(new Color(74, 27, 114).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[6]);
+			StaticSprites.staticsprites[6] = Animation.replaceSpriteC(new Color(50, 18, 77).getRGB(), Color.HSBtoRGB(paveHue / 360f, .77f, .30f), StaticSprites.staticsprites[6]);
+			StaticSprites.staticsprites[6] = Animation.replaceSpriteC(new Color(61, 16, 96).getRGB(), Color.HSBtoRGB(paveHue / 360f, .83f, .38f), StaticSprites.staticsprites[6]);
+			StaticSprites.staticsprites[7] = Animation.replaceSpriteC(new Color(74, 27, 114).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[7]);
+			StaticSprites.staticsprites[7] = Animation.replaceSpriteC(new Color(50, 18, 77).getRGB(), Color.HSBtoRGB(paveHue / 360f, .77f, .30f), StaticSprites.staticsprites[7]);
+			StaticSprites.staticsprites[7] = Animation.replaceSpriteC(new Color(61, 16, 96).getRGB(), Color.HSBtoRGB(paveHue / 360f, .83f, .38f), StaticSprites.staticsprites[7]);
+			StaticSprites.staticsprites[8] = Animation.replaceSpriteC(new Color(74, 27, 114).getRGB(), Color.HSBtoRGB(paveHue / 360f, .73f, .49f), StaticSprites.Ostaticsprites[8]);
+			StaticSprites.staticsprites[8] = Animation.replaceSpriteC(new Color(50, 18, 77).getRGB(), Color.HSBtoRGB(paveHue / 360f, .77f, .30f), StaticSprites.staticsprites[8]);
+			StaticSprites.staticsprites[8] = Animation.replaceSpriteC(new Color(61, 16, 96).getRGB(), Color.HSBtoRGB(paveHue / 360f, .83f, .38f), StaticSprites.staticsprites[8]);
+		}
+		pavetimer++;
+	}
+}

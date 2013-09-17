@@ -1,0 +1,27 @@
+package com.Fluffeater.semideus.colour;
+
+public class ColourGenerate {
+	/*
+	 * Copyright Endoplasm Gaming 2013 Do not distribute
+	 */
+
+	public static int newColour(double y2, double x3, double x) {
+		double x1 = 0;
+		double y1 = 0;
+		double x2 = x3 / 2;
+		double y3 = 0;
+		double denom = (x1 - x2) * (x1 - x3) * (x2 - x3);
+		double A = (x3 * (y2 - y1) + x2 * (y1 - y3) + x1 * (y3 - y2)) / denom;
+		double B = ((x3 * x3) * (y1 - y2) + (x2 * x2) * (y3 - y1) + (x1 * x1) * (y2 - y3)) / denom;
+		double C = (x2 * x3 * (x2 - x3) * y1 + x3 * x1 * (x3 - x1) * y2 + x1 * x2 * (x1 - x2) * y3) / denom;
+		return Math.round(Math.round(A * (x * x) + B * x + C));
+	}
+
+	public static float newColour(float x) { // Takes an x float from 0-1 and
+												// returns the height of a
+												// parabola between 0-1
+		x = x * 2;
+		return (0.5f * ((x - 1) * (x - 1) * (x - 1)) + 0.5f);
+	}
+
+}

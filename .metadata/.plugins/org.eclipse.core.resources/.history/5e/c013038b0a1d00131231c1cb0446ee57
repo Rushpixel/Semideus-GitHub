@@ -1,0 +1,16 @@
+package com.Fluffeater.semideus.Tiles;
+
+import java.io.Serializable;
+
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class RoadVer extends StaticTile implements Serializable {
+
+	public RoadVer(int x, int y) {
+		super(x, y);
+		StaticSpriteVal = 2;
+		mapC = 0x292790;
+	}
+
+}

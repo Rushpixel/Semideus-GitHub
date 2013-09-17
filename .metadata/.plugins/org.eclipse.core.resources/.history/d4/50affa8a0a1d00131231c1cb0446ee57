@@ -1,0 +1,16 @@
+package com.Fluffeater.semideus.Tiles;
+
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class SideWalkPole extends Tile{
+
+	private static final long serialVersionUID = 1L;
+
+	public SideWalkPole(int x, int y) {
+		super(x, y);
+		sprite = new Sprite(16, 32, 64, 88, 0,12, SpriteSheet.tile);
+		mapC = 0x8C09B3;
+	}
+
+}

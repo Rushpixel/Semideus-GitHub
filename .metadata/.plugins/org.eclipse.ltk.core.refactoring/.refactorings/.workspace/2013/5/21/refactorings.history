@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;Archsia/src/com/Fluffeater/Archsia/Graphics/SpriteInst.java&apos;" deleteContents="false" description="Delete resource &apos;Archsia/src/com/Fluffeater/Archsia/Graphics/SpriteInst.java&apos;" element1="/Archsia/src/com/Fluffeater/Archsia/Graphics/SpriteInst.java" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1369183402306"/>
+</session>

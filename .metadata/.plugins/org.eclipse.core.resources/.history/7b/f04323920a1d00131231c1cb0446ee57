@@ -1,0 +1,22 @@
+package com.Fluffeater.semideus.World;
+
+import com.Fluffeater.semideus.Instance.Instance;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Instance.ItemHusk;
+import com.Fluffeater.semideus.Items.Item;
+import com.Fluffeater.semideus.Items.Pistol;
+
+public class InstHitbox extends Hitbox {
+
+	public Instance inst;
+
+	public InstHitbox(float x, float y, int x1, int y1, int x2, int y2, int weight, int index, boolean bullet, boolean movement, boolean damageable, boolean target, Instance inst) {
+		super(x, y, x1, y1, x2, y2, weight, index, bullet, movement, damageable, target);
+		this.inst = inst;
+	}
+
+	public void hit(int damage, int power, double dir, String attacker) {
+		inst.hit(damage, power, dir, attacker);
+	}
+
+}

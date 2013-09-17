@@ -1,0 +1,31 @@
+package com.Fluffeater.semideus.Menu;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Options {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public static Sprite sprite = new Sprite(200,150,0,0,0,0,SpriteSheet.Options1);
+	
+	public static Button Exit = new Button(Menu.Buttons[2],Menu.Buttons[5],42,200,62,206);
+	
+	public Options(){
+		Exit.show();
+	}
+	
+	public static void update(){
+		Exit.check();
+		if(Exit.hit) Game.inOptions = false;
+	}
+	
+	public static void render(){
+		SpriteList.setDraw(40, 70, sprite);
+		Exit.render();
+	}
+}

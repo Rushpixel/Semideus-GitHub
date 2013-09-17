@@ -1,0 +1,105 @@
+package com.Fluffeater.semideus.Instance;
+
+import java.io.Serializable;
+import java.util.Random;
+
+import src.com.Fluffeater.semideus.Camera;
+
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.World.Collision;
+import com.Fluffeater.semideus.World.Hitbox;
+import com.Fluffeater.semideus.World.InstHitbox;
+
+public abstract class Instance implements Serializable {
+
+	public int x; // pixel location of object for rendering
+	public int y;
+	public float xe;// exact location of object for calculations
+	public float ye;
+	public float prevx; // previous exact position
+	public float prevy;
+	public Hitbox col; // the index of the hit box
+	public int HP;
+	public int armor;
+
+	// the parameter of it's hit box
+	public int x1 = 0;
+	public int y1 = 0;
+	public int x2 = 0;
+	public int y2 = 0;
+
+	public boolean damageable = false; // can it take damage
+	public boolean tall = false; // can bullets move through it
+	public boolean solid = false; // can objects move through it
+	public boolean target = false;
+	public int weight = -1;
+
+	private Random random = new Random();
+
+	public String name;
+
+	public Sprite sprite;
+
+	public Instance(int x, int y) {
+		init();
+
+		xe = x;
+		ye = y;
+		col = Collision.addInst(x, y, x1, y1, x2, y2, weight, tall, solid, damageable, target, this);
+		move(0, 0);
+	}
+
+	public void init() {
+
+	}
+
+	public void update() {
+		if (damageable && HP < 0) kill();
+	}
+
+	public void draw() {
+		if (x >= Camera.x && x < Camera.x + Screen.width && y >= Camera.y && y <= Camera.y + Screen.width) {
+			SpriteList.setDraw(x, y, sprite);
+		}
+	}
+
+	public void hit(int damage, int power, double strikedir, String attacker) {
+		damage = power > armor ? damage : damage * (armor / power);
+		HP -= damage;
+		bleed(damage, power, strikedir);
+		// System.out.println(name + " recieved " + damage + "dmg from " +
+		// attacker);
+		// System.out.println(HP);
+
+	}
+
+	public void bleed(int damage, int power, double dir) {
+
+	}
+
+	public void kill() {
+		if (tall || solid) Collision.HitboxList.remove(col);
+		InstanceList.instList.remove(this);
+		// System.out.println(this.getClass().getName());
+	}
+
+	public void killIt() {
+		if (tall || solid) Collision.HitboxList.remove(col);
+	}
+
+	public void move(float xspeed, float yspeed) {
+		prevx = xe;
+		prevy = ye;
+		xe += xspeed;
+		ye += yspeed;
+		if (solid || tall) Collision.move(xe, ye, col);
+		if (Collision.IsThereCollision(col, this.getClass().getName()) && solid) {
+			xe = prevx;
+			ye = prevy;
+		}
+		x = Math.round(xe);
+		y = Math.round(ye);
+	}
+}

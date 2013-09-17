@@ -1,0 +1,10 @@
+package com.Fluffeater.semideus.Tiles;
+
+public class SideWalkUp extends StaticTile{
+
+	public SideWalkUp(int x, int y) {
+		super(x, y);
+		StaticSpriteVal = 8;
+		mapC = 0x623A87;
+	}
+}

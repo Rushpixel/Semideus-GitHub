@@ -1,0 +1,59 @@
+package com.Fluffeater.semideus.Instance;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.World.Hitbox;
+import com.Fluffeater.semideus.World.Map;
+
+public class InstanceList {
+
+	public static ArrayList<Instance> instList = new ArrayList<Instance>();
+
+	public static int listVal = -1;
+
+	public InstanceList() {
+		//instList.add(new Player(0, 0));
+	}
+
+	public static void update() {
+		for (int i = 0; i < instList.size(); i++) {
+			instList.get(i).update();
+		}
+	}
+
+	public static void render() {
+		for (int i = 0; i < instList.size(); i++) {
+			instList.get(i).draw();
+		}
+	}
+
+	public static void spawn(Instance drawinstance) {
+		instList.add(drawinstance);
+	}
+	
+	public static void clearArea(int x1, int y1, int x2, int y2){
+		for(Iterator<Instance> it = instList.iterator(); it.hasNext();){
+			Instance instance = it.next();
+			if(instance.xe > x1 && instance.xe < x2 && instance.ye > y1 && instance.ye < y2){
+				//System.out.println(instList.size());
+				instance.killIt();
+				it.remove();
+			}
+		}
+	}
+
+	public static int getSize() {
+		return instList.size();
+	}
+
+	public static int newVal() {
+		listVal++;
+		return listVal;
+	}
+
+	
+
+}

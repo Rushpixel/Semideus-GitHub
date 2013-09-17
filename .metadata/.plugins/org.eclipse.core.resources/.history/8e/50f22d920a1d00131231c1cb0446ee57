@@ -1,0 +1,89 @@
+package com.Fluffeater.semideus.World;
+
+import java.util.ArrayList;
+
+import com.Fluffeater.semideus.Instance.Instance;
+
+public class Collision {
+
+	public static ArrayList<Hitbox> HitboxList = new ArrayList<Hitbox>();
+
+	public static boolean IsThereCollision(Hitbox hit,String name) {
+		for (Hitbox hitbox : HitboxList) {
+			if (hitbox != hit && hitbox.movement && !(hitbox.y2 + hitbox.y < hit.y1 + hit.y || hitbox.y1 + hitbox.y > hit.y2 + hit.y || hitbox.x2 + hitbox.x < hit.x1 + hit.x || hitbox.x1 + hitbox.x > hit.x2 + hit.x)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean hasHit(Hitbox col, Hitbox col2) {
+		if (!(col2.y2 + col2.y < col.y1 + col.y || col2.y1 + col2.y > col.y2 + col.y || col2.x2 + col2.x < col.x1 + col.x || col2.x1 + col2.x > col.x2 + col.x)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static int lineHit(float slope, float f, int index, int x, int y) {
+
+		int current = -1;
+		double currentdis = -1;
+
+		System.out.println("shot");
+
+		for (int i = 0; i < HitboxList.size(); i++) {
+			if (i != index) {
+				float x1 = (HitboxList.get(i).x1 + HitboxList.get(i).x);
+				float y1 = (HitboxList.get(i).y1 + HitboxList.get(i).y);
+				float x2 = (HitboxList.get(i).x2 + HitboxList.get(i).x);
+				float y2 = (HitboxList.get(i).y2 + HitboxList.get(i).y);
+
+				if (pointBetween(slope * x1 + f, y1, y2) || pointBetween(slope * x2 + f, y1, y2) || pointBetween((y1 - f) / slope, x1, x2) || pointBetween((y2 - f) / slope, x1, x2)) {
+					float b = ((HitboxList.get(i).x - x) * (HitboxList.get(i).x - x));
+					float c = ((HitboxList.get(i).y - y) * (HitboxList.get(i).y - y));
+					double a = Math.sqrt(c + b);
+					if (current != -1) {
+						if (a < currentdis) {
+							current = i;
+							currentdis = a;
+						}
+					} else {
+						current = i;
+						currentdis = a;
+					}
+				}
+			}
+		}
+
+		return current;
+	}
+
+	public static boolean pointBetween(float f, float y1, float y2) {
+		if (f >= y1 && f <= y2) return true;
+		return false;
+	}
+
+	public static Hitbox addMap(float x, float y, int x1, int y1, int x2, int y2, int weight, boolean b, boolean c, boolean d) {
+		HitboxList.add(new MapHitbox(x, y, x1, y1, x2, y2, weight, HitboxList.size(), b, c, d));
+		return HitboxList.get(HitboxList.size() - 1);
+	}
+
+	public static Hitbox addInst(float x, float y, int x1, int y1, int x2, int y2, int weight, boolean b, boolean c, boolean d, boolean e, Instance inst) {
+		HitboxList.add(new InstHitbox(x, y, x1, y1, x2, y2, weight, HitboxList.size(), b, c, d,e,inst));
+		return HitboxList.get(HitboxList.size() - 1);
+	}
+
+	public static void move(float xe, float ye, Hitbox col) {
+		col.x = xe;
+		col.y = ye;
+
+	}
+
+	/*public static Hitbox get(int index) {
+		for (int i = 0; i < HitboxList.size(); i++) {
+			if (index == HitboxList.get(i)) return HitboxList.get(i);
+		}
+		return null;
+	}*/
+
+}

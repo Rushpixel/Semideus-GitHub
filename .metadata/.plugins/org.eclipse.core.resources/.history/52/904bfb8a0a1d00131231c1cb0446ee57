@@ -1,0 +1,24 @@
+package com.Fluffeater.semideus.Tiles;
+
+import java.awt.Color;
+
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Tree extends Tile{
+
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public Tree(int x, int y, int colour) {
+		super(x, y);
+		sprite = new Sprite(16, 44, 64, 0, 0,24, SpriteSheet.tile);
+		mapC = colour;
+		sprite = Animation.replaceSpriteC(new Color(255, 255, 255).getRGB(), colour, sprite);
+		sprite = Animation.replaceSpriteC(new Color(0, 0, 0).getRGB(), new Color(colour).darker().getRGB(), sprite);
+	}
+	
+}

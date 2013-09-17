@@ -1,0 +1,105 @@
+package com.Fluffeater.semideus.Menu;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.ManageGame;
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Menu {
+
+	public static Sprite[] companyIntro;
+	public static boolean inMenu = false;
+	public static int timer = 0;
+	public static int animationIndex = 0;
+	public static int animationPhase = 0;
+	public static int animationRepeat = 0;
+	
+	public static Sprite mainMenu = new Sprite(360, 203, 0, 0, 0, 0, SpriteSheet.Menu1);
+	public static Sprite[] Buttons;
+	public static Button Play, Options, Exit;
+	public static TitleSign titlesign = new TitleSign();
+
+	public Menu() {
+		companyIntro = Animation.devideSheet(SpriteSheet.Loading, 360, 203, 0,0);
+		Buttons = Animation.devideSheet(SpriteSheet.Buttons, 40, 6, 0, 0);
+		Play = new Button(Buttons[0],Buttons[3], 166, 120, 206, 126);
+		Options = new Button(Buttons[1],Buttons[4],166, 140, 206, 146);
+		Exit = new Button(Buttons[2],Buttons[5],166,160,206,166);
+	}
+
+	public static void update() {
+		if (inMenu) {
+			mainMenu();
+		} else {
+			titleSequence();
+		}
+	}
+
+	public static void titleSequence() {
+		timer++;
+
+		if (timer == 3) {
+			timer = 0;
+			animationIndex++;
+
+			if (animationPhase == 0 || animationPhase == 1 && animationIndex == 6) {
+				animationIndex = 0;
+				animationRepeat++;
+			}
+
+			if (animationPhase == 2 && animationIndex == 6) {
+				animationIndex = 0;
+				animationRepeat++;
+			}
+		}
+
+		if (animationPhase == 0 && animationRepeat == 10) {
+			animationRepeat = 0;
+			animationPhase++;
+		}
+		if (animationPhase == 1 && animationRepeat == 1) {
+			animationRepeat = 0;
+			animationPhase++;
+		}
+		if (animationPhase == 2 && animationRepeat == 10) {
+			animationRepeat = 0;
+			inMenu = true;
+			Play.show();
+			Exit.show();
+			Options.show();
+		}
+	}
+
+	public static void mainMenu() {
+		Play.check();
+		Exit.check();
+		Options.check();
+		titlesign.update();
+		if(Play.hit) {
+			ManageGame.New();
+			Game.inGame = true;
+		}
+		if(Options.hit){
+			Options.show();
+		}
+		if(Exit.hit){
+			Game.running = false;
+		}
+	}
+
+	public static void render() {
+		if(inMenu){
+			Play.render();
+			Options.render();
+			Exit.render();
+			SpriteList.setDraw(0, 0, mainMenu);
+			titlesign.render();
+			
+		}else{
+			SpriteList.setDraw(0, 0, companyIntro[animationIndex + animationPhase * 6]);
+		}
+	}
+
+}

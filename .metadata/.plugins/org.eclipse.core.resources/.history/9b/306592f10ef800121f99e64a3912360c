@@ -1,0 +1,88 @@
+package com.Fluffeater.semideus.Instance;
+
+import java.io.Serializable;
+import java.util.Random;
+
+import com.Fluffeater.semideus.Camera;
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.World.Collision;
+
+public abstract class Instance implements Serializable {
+
+	public int x; // pixel location of object
+	public int y;
+	public float xe;// exact location of object
+	public float ye;
+	public float prevx; // previous exact position
+	public float prevy;
+	public int colIndex;
+	public int id; // is this used anyway? Gosh I have no idea, I added it ages
+					// ago and it might be important.
+	public int HP;
+	public int armor;
+
+	public int x1, y1, x2, y2; // the parameter of it's hit box
+
+	public boolean damageable = false; // can it take damage
+	public boolean tall = false; // can bullets move through it
+	public boolean solid = false; // can objects move through it
+	public int weight = -1;
+
+	private Random random = new Random();
+
+	public String name;
+
+	public Sprite sprite;
+
+	public Instance(int x, int y) {
+		this.x = x;
+		this.y = y;
+		name = this.getClass().getName();
+
+		init();
+
+		if (tall || solid) {
+			colIndex = Collision.add(x, y, x1, y1, x2, y2, weight, tall, solid);
+			System.out.println("Created new hitbox: " + colIndex);
+		}
+	}
+
+	public void init() {
+
+	}
+
+	public void update() {
+
+	}
+
+	public void draw() {
+		if (x >= Camera.x && x < Camera.x + Screen.width && y >= Camera.y && y <= Camera.y + Screen.width) {
+			SpriteList.setDraw(x, y, sprite);
+		}
+	}
+
+	public void hit(int damage, int power, String attacker) {
+		if (random.nextInt(armor + power) >= armor) {
+			HP -= damage;
+			System.out.println(name + " recieved " + damage + "dmg from " + attacker);
+		} else {
+			System.out.println(attacker + " hit " + name + "'s armor");
+		}
+	}
+
+	public void move(int xspeed, int yspeed) {
+		prevx = xe;
+		prevy = ye;
+		xe += xspeed;
+		ye += yspeed;
+		if (solid || tall) Collision.move(xe, ye, colIndex);
+		if (Collision.IsThereCollision(colIndex)) {
+			xe = prevx;
+			ye = prevy;
+		}
+		x = Math.round(xe);
+		y = Math.round(ye);
+	}
+}

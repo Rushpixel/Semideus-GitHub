@@ -1,0 +1,25 @@
+package com.Fluffeater.semideus.World;
+
+public class Hitbox {
+
+	public int x1, x2, y1, y2, weight;
+	public float x, y;
+	public boolean bullet, movement,target;
+
+	public Hitbox(float x, float y, int x1, int y1, int x2, int y2, int weight, int index, boolean bullet, boolean movement, boolean damageable, boolean target) {
+		this.x = x;
+		this.y = y;
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;
+		this.weight = weight;
+		this.bullet = bullet;
+		this.movement = movement;
+		this.target = target;
+	}
+	
+	public void hit(int damage, int power,double dir, String attacker){
+	}
+
+}

@@ -1,0 +1,50 @@
+package com.Fluffeater.semideus.Graphics;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Instance.InstanceList;
+
+public class GUI {
+
+	public static Sprite[] heart;
+	public static int healthAnim = 0;
+	public static int healthTimer = 0;
+
+	public GUI() {
+		heart = Animation.devideSheet(SpriteSheet.heart, 10, 10, 0, 0);
+	}
+
+	public static void health() {
+		for (int i = 0; i < Math.ceil((float) InstanceList.instList.get(0).HP / 5); i++) {
+			Game.screen.drawSprite(heart[healthAnim], i * 8 + 3, 3);
+		}
+	}
+
+	public static void update() {
+		if (healthAnim == 0) {
+			if (healthTimer == 120) {
+				healthAnim++;
+				healthTimer = 0;
+			}
+		}
+		if (healthAnim == 1) {
+			if (healthTimer == 6) {
+				healthAnim++;
+				healthTimer = 0;
+			}
+		}
+		if (healthAnim == 2) {
+			if (healthTimer == 12) {
+				healthAnim++;
+				healthTimer = 0;
+			}
+		}
+		if (healthAnim == 3) {
+			if (healthTimer == 6) {
+				healthAnim = 0;
+				healthTimer = 0;
+			}
+		}
+		healthTimer++;
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.Fluffeater.semideus.Instance.Particle;
+
+import com.Fluffeater.semideus.Instance.Instance;
+
+public abstract class Particle extends Instance{
+	
+	public int z = 12;
+	
+	public Particle(int x, int y) {
+		super(x,y);
+	}
+}

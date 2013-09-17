@@ -1,0 +1,59 @@
+package com.Fluffeater.semideus.Controls;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+
+import src.com.Fluffeater.semideus.Camera;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Inventory;
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.AI.Movement;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Instance.Zombie1;
+
+public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
+
+	public static boolean inWindow = false;
+	public static boolean clicked = false;
+	public static int mousex, mousey;
+
+	public void mouseDragged(MouseEvent e) {
+
+	}
+
+	public void mouseMoved(MouseEvent e) {
+		mousex = e.getX()/Game.scale+Camera.x;
+		mousey = e.getY()/Game.scale+Camera.y;
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		//System.out.println(Movement.betweenPoints(mousex, mousey, InstanceList.instList.get(0).x, InstanceList.instList.get(0).y));
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		inWindow = true;
+	}
+
+	public void mouseExited(MouseEvent e) {
+		inWindow = false;
+	}
+
+
+	public void mousePressed(MouseEvent e) {
+		clicked = true;
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		clicked = false;
+	}
+
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		
+
+	}
+
+}

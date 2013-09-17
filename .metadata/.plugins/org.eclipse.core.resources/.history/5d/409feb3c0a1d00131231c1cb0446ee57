@@ -1,0 +1,123 @@
+package com.Fluffeater.semideus;
+
+import java.awt.event.KeyEvent;
+
+import com.Fluffeater.semideus.Controls.Control;
+import com.Fluffeater.semideus.Controls.Keyboard;
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Instance.Instance;
+import com.Fluffeater.semideus.Instance.Particle.Blood;
+
+public class Player extends Instance {
+
+	public static int speed = 2;
+	public static int direction = 0;
+	public static int aim = 0;
+	public static Sprite[] spriteshead;
+	public static Sprite[] spriteschest;
+	public static Sprite[] spriteslegs;
+
+	public Player(int x, int y) {
+		super(x, y);
+
+		spriteshead = Animation.devideSheet(SpriteSheet.playerhead, 16, 16, 8,32);
+		spriteschest = Animation.devideSheet(SpriteSheet.playerchest, 16, 16, 8,27);
+		spriteslegs = Animation.devideSheet(SpriteSheet.playerlegs, 16, 16, 8,16);
+
+		HP = 30;
+		armor = 1;
+	}
+	
+	public void init(){
+		damageable = true;
+		solid = true;
+		x1 = -4;
+		y1 = -3;
+		x2 = 4;
+		y2 = 3;
+		
+		name = "Player";
+	}
+
+	public void update() {
+		
+		Control.update();
+		Inventory.weapons[0].update();
+		
+		int dir = -1;
+		if (Keyboard.keys[Control.C_up]) {
+			move(0,-speed);
+			dir = 4;
+		}
+		if (Keyboard.keys[Control.C_down]) {
+			move(0,speed);
+			dir = 0;
+		}
+		if (Keyboard.keys[Control.C_left]) {
+			move(-speed,0);
+			if (dir == -1) dir = 2;
+			if (dir == 0) dir = 1;
+			if (dir == 4) dir = 3;
+		}
+		if (Keyboard.keys[Control.C_right]) {
+			move(speed,0);
+			if (dir == -1) dir = 6;
+			if (dir == 0) dir = 7;
+			if (dir == 4) dir = 5;
+		}
+
+		if (dir != -1) direction = dir;
+		
+		if(!(Keyboard.keys[Control.C_lup] || Keyboard.keys[Control.C_ldown] || Keyboard.keys[Control.C_lleft] || Keyboard.keys[Control.C_lright])){
+			aim = direction;
+		}
+		
+		int am = -1;
+		if (Keyboard.keys[Control.C_lup]) {
+			am = 4;
+		}
+		if (Keyboard.keys[Control.C_ldown]) {
+			am = 0;
+		}
+		if (Keyboard.keys[Control.C_lleft]) {
+			if (am == -1) am = 2;
+			if (am == 0) am = 1;
+			if (am == 4) am = 3;
+		}
+		if (Keyboard.keys[Control.C_lright]) {
+			if (am == -1) am = 6;
+			if (am == 0) am = 7;
+			if (am == 4) am = 5;
+		}
+		if(am != -1) aim = am;
+		
+		if(!(Keyboard.keys[Control.C_lup] || Keyboard.keys[Control.C_ldown] || Keyboard.keys[Control.C_lleft] || Keyboard.keys[Control.C_lright])){
+			aim = direction;
+		}
+		
+		if(!(Keyboard.keys[Control.C_up] || Keyboard.keys[Control.C_down] || Keyboard.keys[Control.C_left] || Keyboard.keys[Control.C_down])){
+			direction = aim;
+		}
+		
+		if(HP <= 0) ManageGame.New();
+		
+		//System.out.println(Inventory.weapons[Inventory.currentitem].getClass().getName());
+	}
+	
+	public void bleed(int damage, int power, double dir){
+		Blood.makeBlood(x,y,dir,power,damage*2);
+		System.out.println(dir);
+	}
+
+	public void draw() {
+		SpriteList.setDraw(x, y, spriteshead[aim]);
+		SpriteList.setDraw(x, y, spriteschest[aim + 16]);
+		SpriteList.setDraw(x, y, spriteschest[aim]);
+		SpriteList.setDraw(x, y, spriteslegs[aim]);
+		SpriteList.setDraw(x, y, spriteschest[aim + 8]);
+	}
+
+}

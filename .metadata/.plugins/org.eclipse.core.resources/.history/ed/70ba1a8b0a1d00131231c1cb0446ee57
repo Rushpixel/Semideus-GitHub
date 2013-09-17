@@ -1,0 +1,24 @@
+package com.Fluffeater.semideus.Tiles;
+
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.StaticSprites;
+
+public abstract class StaticTile extends Tile {
+
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	
+	
+	public int StaticSpriteVal;
+	
+	public StaticTile(int x, int y) {
+		super(x, y);
+	}
+	
+	public Sprite getSprite(){
+		return StaticSprites.staticsprites[StaticSpriteVal];
+	}
+}

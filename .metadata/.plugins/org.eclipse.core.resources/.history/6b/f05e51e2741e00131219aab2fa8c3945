@@ -1,0 +1,99 @@
+package com.Fluffeater.semideus.Graphics;
+
+import com.Fluffeater.semideus.Camera;
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Menu.Menu;
+import com.Fluffeater.semideus.Menu.Options;
+import com.Fluffeater.semideus.Tiles.Tile;
+import com.Fluffeater.semideus.World.Map;
+import com.Fluffeater.semideus.World.MapList;
+
+public class Screen {
+
+	public static int height;
+	public static int width;
+	public static int[] pixels;
+	public static int alpha;
+
+	public static GUI gui = new GUI();
+
+	public MapList mapList = new MapList();
+	public Camera c = new Camera();
+
+	public Screen(int width, int height) {
+		Screen.width = width;
+		Screen.height = height;
+		alpha = SpriteSheet.tile.pixels[0];
+
+		pixels = new int[width * height];
+
+	}
+
+	public void clear() {
+		for (int i = 0; i < height * width; i++) {
+			pixels[i] = 0;
+		}
+	}
+
+	public void render() {
+		SpriteList.clear();
+
+		if (Game.inGame) {
+			InstanceList.render();
+			MapList.render();
+		}
+		renderMenu();
+		renderObject();
+		renderGUI();
+	}
+
+	public void drawSprite(Sprite sprite, int x, int y) {
+		for (int iy = 0; iy < sprite.hSIZE; iy++) {
+			for (int ix = 0; ix < sprite.wSIZE; ix++) {
+				if (ix + x - sprite.xoffset >= 0 && iy + y - sprite.yoffset >= 0 && iy + y - sprite.yoffset < height && ix + x - sprite.xoffset < width) {
+					setPix(ix + x - sprite.xoffset + (iy + y - sprite.yoffset) * width, sprite.pixels[ix + iy * sprite.wSIZE]);
+				}
+			}
+		}
+	}
+
+	public void setPix(int i, int k) {
+		if (i >= 0 && i < pixels.length && k != alpha) pixels[i] = k;
+	}
+
+	public void renderObject() {
+		for (int i = 0; i < SpriteList.getSize(); i++) {
+			drawSprite(SpriteList.getSprite(i), SpriteList.getX(i) - Camera.x, SpriteList.getY(i) - Camera.y);
+		}
+
+	}
+
+	public void renderGUI() {
+		if (Game.Paused && Game.inGame) {
+			drawSprite(Sprite.pauseBackGround, 0, 0);
+		}
+		if (Game.inGame) GUI.health();
+
+	}
+
+	public void renderMenu() {
+		if (!Game.inGame) {
+			Menu.render();
+		}
+		if (Game.inOptions) Options.render();
+	}
+
+	public int remainder(int x, int y) {
+		while (x >= y) {
+			x -= y;
+		}
+		while (x < 0) {
+			x += y;
+		}
+
+		return x;
+	}
+
+}

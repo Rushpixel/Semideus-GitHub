@@ -1,0 +1,35 @@
+package com.Fluffeater.Archsia.World;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class MapList {
+
+	public static ArrayList<Map> mapList = new ArrayList<Map>();
+	public static Random generator = new Random();
+
+	public MapList() {
+		mapList.add(new Map(0, 0, 2, true, true, true, true));
+	}
+
+	public static void render() {
+		for (int i = 0; i < mapList.size(); i++) {
+			mapList.get(i).render();
+		}
+	}
+
+	public static boolean checkforBlock(int x, int y) {
+		for (int i = 0; i < mapList.size(); i++) {
+			if (mapList.get(i).x == x && mapList.get(i).y == y) return true;
+		}
+		return false;
+	}
+
+	public static Map getBlock(int x, int y) {
+		for (int i = 0; i < mapList.size(); i++) {
+			if (mapList.get(i).x == x && mapList.get(i).y == y) return mapList.get(i);
+		}
+		return new Map(0, 0, 15,false,false,false,false);
+	}
+
+}

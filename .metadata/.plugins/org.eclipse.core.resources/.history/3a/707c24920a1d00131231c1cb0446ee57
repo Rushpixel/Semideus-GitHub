@@ -1,0 +1,40 @@
+package com.Fluffeater.semideus.World;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class MapList {
+	
+	public static ArrayList<Map> mapList = new ArrayList<Map>();
+	public static Random generator = new Random();
+	
+	public MapList(){
+	}
+	
+	public static void render(){
+		for(Map map : mapList){
+			if(map.seen) map.render();
+		}
+	}
+	
+	public static void refresh(){
+		for(int i = 0; i < mapList.size(); i++){
+			mapList.get(i).refresh();
+		}
+	}
+	
+	public static boolean checkforBlock(int x, int y){
+		for(Map map : mapList){
+			if(map.x == x && map.y == y) return true;
+		}
+		return false;
+	}
+	
+	public static Map getBlock(int x, int y){
+		for(int i = 0; i < mapList.size(); i++){
+			if(mapList.get(i).x == x && mapList.get(i).y == y) return mapList.get(i);
+		}
+		return new Map(0,0);
+	}
+
+}

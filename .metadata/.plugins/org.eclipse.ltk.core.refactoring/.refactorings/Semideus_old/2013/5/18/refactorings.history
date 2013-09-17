@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;c1x&apos; in &apos;com.Fluffeater.Archsia.Graphics.screen.renderMap()&apos; to &apos;cx&apos;&#x0A;- Original project: &apos;Archsia&apos;&#x0A;- Original element: &apos;com.Fluffeater.Archsia.Graphics.screen.renderMap().c1x&apos;&#x0A;- Renamed element: &apos;c1x&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;c1x&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.Fluffeater.Archsia.Graphics{screen.java[screen~renderMap@c1x!1150!1168!1154!1156!I!0!false" name="cx" references="true" stamp="1367557681687" version="1.0"/>
+</session>

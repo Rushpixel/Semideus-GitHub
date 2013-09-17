@@ -1,0 +1,84 @@
+package com.Fluffeater.Archsia.Graphics;
+
+import com.Fluffeater.Archsia.Camera;
+import com.Fluffeater.Archsia.Player;
+import com.Fluffeater.Archsia.Tiles.Tile;
+import com.Fluffeater.Archsia.World.Map;
+
+public class screen {
+
+	public static int height;
+	public static int width;
+	public static int[] pixels;
+	public static int alpha;
+
+	public Map map = new Map();
+	public Camera c = new Camera();
+
+	public screen(int width, int height) {
+		screen.width = width;
+		screen.height = height;
+		alpha = Sprite.water.pixels[0];
+
+		pixels = new int[width * height];
+
+	}
+
+	public void clear() {
+		for (int i = 0; i < height * width; i++) {
+			pixels[i] = 0;
+		}
+	}
+
+	public void render() {
+		renderMap();
+		renderObject();
+	}
+
+	public void drawSprite(Sprite sprite, int x, int y) {
+		for (int iy = 0; iy < sprite.hSIZE; iy++) {
+			for (int ix = 0; ix < sprite.wSIZE; ix++) {
+				if(ix + x >= 0 && iy + y >= 0 && iy + y < height && ix + x < width){
+				setPix(ix + x + (iy + y - sprite.yoffset) * width, sprite.pixels[ix + iy * sprite.wSIZE]);
+				}
+			}
+		}
+	}
+
+	public void setPix(int i, int k) {
+		if (i >= 0 && i < pixels.length && k != alpha) pixels[i] = k;
+	}
+
+	public void renderMap() {
+
+		int cx = Camera.x;
+		int cy = Camera.y;
+		int xoffset = remainder(cx, 16);
+		int yoffset = remainder(cy, 10);
+
+		for (int iy = -10; iy <= height; iy += 10) {
+			for (int ix = 0; ix <= width; ix += 16) {
+				drawSprite(Tile.getTile(Map.getTile(ix + cx - xoffset, iy + cy - yoffset)).getSprite(), ix - xoffset, iy - yoffset);
+			}
+		}
+
+	}
+
+	public void renderObject() {
+
+		drawSprite(Sprite.player, Player.x - Camera.x, Player.y - Camera.y);
+
+	}
+
+	public int remainder(int x, int y) {
+		while (x >= y) {
+			x -= y;
+		}
+		while (x < 0) {
+			x += y;
+		}
+
+		return x;
+	}
+
+}

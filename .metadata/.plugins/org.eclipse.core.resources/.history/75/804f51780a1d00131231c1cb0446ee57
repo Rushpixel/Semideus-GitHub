@@ -1,0 +1,9 @@
+package com.Fluffeater.semideus.Items;
+
+public class BlankItem extends Item{
+
+	public BlankItem(int type) {
+		super(type);
+	}
+
+}

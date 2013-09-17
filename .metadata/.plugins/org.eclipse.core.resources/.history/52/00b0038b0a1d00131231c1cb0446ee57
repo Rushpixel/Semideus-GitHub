@@ -1,0 +1,14 @@
+package com.Fluffeater.semideus.Tiles;
+
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class SideWalk extends StaticTile{
+
+	public SideWalk(int x, int y) {
+		super(x, y);
+		StaticSpriteVal = 4;
+		mapC = 0x5D3483;
+	}
+
+}

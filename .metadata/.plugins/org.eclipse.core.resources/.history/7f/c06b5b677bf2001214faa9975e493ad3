@@ -1,0 +1,76 @@
+package com.Fluffeater.Archsia;
+
+import com.Fluffeater.Archsia.Graphics.Animation;
+import com.Fluffeater.Archsia.Graphics.Sprite;
+import com.Fluffeater.Archsia.Graphics.SpriteList;
+import com.Fluffeater.Archsia.Graphics.SpriteSheet;
+
+public class Menu {
+
+	public static Sprite[][] companyIntro;
+	public static boolean inMenu = false;
+	public static int timer = 0;
+	public static int animationIndex = 0;
+	public static int animationPhase = 0;
+	public static int animationRepeat = 0;
+
+	public Menu() {
+		companyIntro = Animation.devideSheet(SpriteSheet.Loading, 360, 203, 0);
+	}
+
+	public static void update() {
+		if (inMenu) {
+			mainMenu();
+		} else {
+			titleSequence();
+		}
+	}
+
+	public static void titleSequence() {
+		timer++;
+
+		if (timer == 3) {
+			timer = 0;
+			animationIndex++;
+
+			if (animationPhase == 0 && animationIndex == 6) {
+				animationIndex = 0;
+				animationRepeat++;
+			}
+			if (animationPhase == 1 && animationIndex == 6) {
+				animationIndex = 0;
+				animationRepeat++;
+			}
+			if (animationPhase == 2 && animationIndex == 6) {
+				animationIndex = 0;
+				animationRepeat++;
+			}
+		}
+
+		if (animationPhase == 0 && animationRepeat == 6) {
+			animationRepeat = 0;
+			animationPhase++;
+		}
+		if (animationPhase == 1 && animationRepeat == 1) {
+			animationRepeat = 0;
+			animationPhase++;
+		}
+		if (animationPhase == 2 && animationRepeat == 10) {
+			animationRepeat = 0;
+			inMenu = true;
+		}
+	}
+
+	public static void mainMenu() {
+		Game.inGame = true;
+	}
+
+	public static void render() {
+		if (inMenu) {
+			SpriteList.setDraw(0, 0, companyIntro[animationIndex + animationPhase * 6][0]);
+		} else{
+			
+		}
+	}
+
+}

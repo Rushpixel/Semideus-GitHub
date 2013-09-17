@@ -1,0 +1,28 @@
+package com.Fluffeater.semideus.Tiles;
+
+import java.awt.Color;
+
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.World.Collision;
+
+public class WallBlank extends Tile {
+
+	public WallBlank(int x, int y, int colour) {
+		super(x, y);
+		sprite = new Sprite(16, 30, 48, 0, 0,18, SpriteSheet.tile);
+		mapC = colour;
+		sprite = Animation.replaceSpriteC(new Color(255, 255, 255).getRGB(), colour, sprite);
+		sprite = Animation.replaceSpriteC(new Color(0, 0, 0).getRGB(), new Color(colour).darker().getRGB(), sprite);
+	}
+	
+	public void init(){
+		x1 = 0;
+		y1 = 0;
+		x2 = 16;
+		y2 = 12;
+		tall = true;
+		solid = true;
+	}
+}

@@ -1,0 +1,19 @@
+package com.Fluffeater.semideus.Menu;
+
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Pause {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public static Sprite sprite = new Sprite(320, 180, 0, 0, 0,0, SpriteSheet.pauseScreen);
+	//public static Button ExitToMenu = new Button
+	
+	public static void render(){
+		Screen.drawSprite(sprite, 0, 0);
+	}
+}

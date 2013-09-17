@@ -1,0 +1,31 @@
+package com.Fluffeater.semideus.Items;
+
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.AI.Movement;
+import com.Fluffeater.semideus.Audio.Audio;
+import com.Fluffeater.semideus.Controls.Mouse;
+import com.Fluffeater.semideus.Instance.Bullet_Pistol;
+import com.Fluffeater.semideus.Instance.Instance;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.World.Collision;
+import com.Fluffeater.semideus.World.Hitbox;
+
+public class Pistol extends Weapon {
+
+	public Pistol(int type) {
+		super(type);
+	}
+
+	public void fire(int x, int y) {
+		if (reload == 0) {
+			try {
+				Hitbox hitbox = Weapon.bullet(Player.aim / 8f * 360f, x, y, InstanceList.instList.get(0).col, 300);
+				hitbox.hit(20, 5,Movement.betweenPoints(InstanceList.instList.get(0).xe, InstanceList.instList.get(0).ye, hitbox.x, hitbox.y), InstanceList.instList.get(0).name);
+			} catch (Exception e) {
+			}
+			InstanceList.spawn(new Bullet_Pistol(InstanceList.instList.get(0).x, InstanceList.instList.get(0).y,(Player.aim / 8f *360 - 90) % 360f ,5,20));
+			Audio.play(2);
+			reload = 30;
+		}
+	}
+}

@@ -1,0 +1,49 @@
+package com.Fluffeater.semideus.Graphics;
+
+import java.io.Serializable;
+
+public class Sprite implements Serializable {
+
+	public final int hSIZE;
+	public final int wSIZE;
+	public int x, y;
+	public int[] pixels;
+	public int yoffset, xoffset;
+	private SpriteSheet sheet;
+
+	public static Sprite pauseBackGround = new Sprite(320, 180, 0, 0, 0,0, SpriteSheet.pauseScreen);
+	public static Sprite[] items = Animation.devideSheet(SpriteSheet.Item, 8,8,0, 8);
+	public static Sprite[] blood = Animation.devideSheet(SpriteSheet.blood, 6, 6, 3, 3);
+
+	public Sprite(int wsize, int hsize, int x, int y,int xoffset, int yoffset, SpriteSheet sheet) {
+		wSIZE = wsize;
+		hSIZE = hsize;
+		this.x = x;
+		this.y = y;
+		this.yoffset = yoffset;
+		this.xoffset = xoffset;
+		this.sheet = sheet;
+
+		pixels = new int[wSIZE * hSIZE];
+
+		load();
+
+	}
+	
+	public Sprite(int wSize, int hSize, int xoffset, int yoffset, int[] pixels){
+		wSIZE = wSize;
+		hSIZE = hSize;
+		this.xoffset = xoffset;
+		this.yoffset = yoffset;
+		this.pixels = pixels;
+	}
+	
+	private void load() {
+		for (int iy = y; iy < y + hSIZE; iy++) {
+			for (int ix = x; ix < x + wSIZE; ix++) {
+				pixels[ix - x + (iy - y) * wSIZE] = sheet.pixels[ix + iy * sheet.wSIZE];
+			}
+		}
+	}
+
+}

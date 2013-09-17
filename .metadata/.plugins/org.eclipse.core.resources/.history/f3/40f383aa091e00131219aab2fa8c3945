@@ -1,0 +1,39 @@
+package com.Fluffeater.semideus.Audio;
+
+import java.io.*;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Line;
+
+public class Audio {
+
+	private static Clip SFX[] = new Clip[3];
+
+	public static Line line;
+
+	public Audio() {
+
+		load(new File("Audio/April.wav"),0);
+		load(new File("Audio/punch1.wav"),1);
+		load(new File("Audio/gun1.wav"),2);
+		
+	}
+	
+	public static void load(File file,int i){
+		try {
+			SFX[i] = (Clip) AudioSystem.getLine(new Line.Info(Clip.class));
+			SFX[i].open(AudioSystem.getAudioInputStream(file));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void play(int i) {
+		if(!SFX[i].isActive()){
+			SFX[i].stop();
+		}
+		SFX[i].start();
+	}
+
+}

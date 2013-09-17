@@ -1,0 +1,40 @@
+package com.Fluffeater.semideus.Menu;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Pause {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public static Sprite sprite = new Sprite(320, 180, 0, 0, 0,0, SpriteSheet.pauseScreen);
+	public static Button ExitToMenu = new Button(Menu.Buttons[6],Menu.Buttons[7],250,113,290,119);
+	
+	public Pause(){
+	}
+	
+	public static void pause(){
+		Game.Paused = true;
+		ExitToMenu.show();
+	}
+	
+	public static void unpause(){
+		Game.Paused = false;
+		ExitToMenu.hide();
+	}
+	
+	public static void render(){
+		Screen.drawSprite(sprite, 0, 0);
+		ExitToMenu.render();
+		System.out.println("pause rendered");
+	}
+	
+	public static void update(){
+		ExitToMenu.check();
+		if(ExitToMenu.hit) Game.inGame = true;
+	}
+}

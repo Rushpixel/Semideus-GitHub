@@ -1,0 +1,29 @@
+package com.Fluffeater.semideus.Graphics;
+
+public class StaticSprites {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public static Sprite[] Ostaticsprites = new Sprite[] {
+		new Sprite(16, 20, 16, 0, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 16, 20,0, 0, SpriteSheet.tile),
+		new Sprite(16, 20, 16, 40, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 16, 60, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 32, 0, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 32, 20,0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 32, 40, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 32, 80, 0,0, SpriteSheet.tile),
+		new Sprite(16, 20, 32, 60, 0,0, SpriteSheet.tile)
+	};
+	
+	public static Sprite[] staticsprites;
+	
+	public StaticSprites(){
+		staticsprites = new Sprite[Ostaticsprites.length];
+		for(int i = 0; i < Ostaticsprites.length; i++){
+			staticsprites[i] = new Sprite(Ostaticsprites[i].wSIZE,Ostaticsprites[i].hSIZE,Ostaticsprites[i].xoffset,Ostaticsprites[i].yoffset,Ostaticsprites[i].pixels.clone());
+		}
+	}
+}

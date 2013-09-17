@@ -1,0 +1,40 @@
+package com.Fluffeater.Archsia;
+
+import java.util.Random;
+
+public class Map {
+	
+	public static int mapSize = 64;
+	public static int[][] tiles = new int[mapSize][mapSize];
+	
+	public Map(long seed){
+		Random random = new Random(seed);
+		for(int x = 0; x < mapSize; x++){
+			for(int y = 0; y < mapSize; y++){
+				tiles[x][y] = random.nextInt(0xffffff);
+			}
+		}
+	}
+	
+	public Map(){
+		Random random = new Random();
+		for(int x = 0; x < mapSize; x++){
+			for(int y = 0; y < mapSize; y++){
+				tiles[x][y] = random.nextInt(0xffffff);
+			}
+		}
+	}
+	
+	public static int getTile(int x, int y){
+		int tileIndx = x>>5;
+		int tileIndy = y>>5;
+		if(tileIndx<mapSize && tileIndx>=0 && tileIndy<mapSize && tileIndy>=0){
+			return tiles[tileIndx][tileIndy];
+		}else{
+		return 0x000000;
+		}
+	}
+	
+	
+
+}

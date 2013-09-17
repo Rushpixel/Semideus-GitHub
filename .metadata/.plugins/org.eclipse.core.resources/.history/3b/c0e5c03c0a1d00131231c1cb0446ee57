@@ -1,0 +1,105 @@
+package com.Fluffeater.semideus.World;
+
+import java.awt.Color;
+import java.io.Serializable;
+import java.util.Random;
+
+import src.com.Fluffeater.semideus.Camera;
+
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Tiles.Tile;
+
+public class Map implements Serializable {
+
+	public Tile[] tiles;
+	public int x, y;
+	public boolean generated = false; // is this map generated
+	public boolean seen = false; // is the map on screen
+	public Sprite sheet;
+
+	// type 0 = horizontal
+	// type 1 = vertical
+	// type 2 = cross road
+	// type 3 = top-left corner
+	// type 4 = top-right corner
+	// type 5 = bottom-left corner
+	// type 6 = bottom-right corner
+	// type 7 = top T intersect
+	// type 8 = left T intersect
+	// type 9 = bottom T intersect
+	// type 10 = right T intersect
+	// type 11 = top dead end
+	// type 12 = left dead end
+	// type 13 = bottom dead end
+	// type 14 = right dead end
+	// type 15 = courtyard
+
+	public boolean top, left, bottom, right;
+
+	public Generate generate = new Generate();
+
+	public Map(int x, int y) {
+		this.x = x;
+		this.y = y;
+		//refresh();
+	}
+
+	public void refresh() {
+		seen = isSeen(x, y, 256, 192, Camera.x, Camera.y, Screen.width, Screen.height);
+		if(seen && !generated){
+			generate();
+			
+		}
+		if(!seen && generated){
+			degenerate();
+		}
+	}
+	
+	public void generate(){
+		generate.generateColours();
+		top = generate.genTop(x,y);
+		left = generate.genLeft(x,y);
+		bottom = generate.genBottom(x,y);
+		right = generate.genRight(x,y);
+		sheet = generate.setMap(top, left, bottom, right);
+		tiles = generate.build(x, y, sheet);
+		generated = true;
+		generate.continuemap(x, y);	
+		//System.out.println("generated");
+	}
+	
+	public void degenerate(){
+		generated = false;
+		//System.out.println("ungenerated");
+		InstanceList.clearArea(x, y, x+256, y+192);
+		for (Tile tile : tiles) {
+			tile.removeCol();
+		}
+	}
+
+	public void render() {
+			for (Tile tile : tiles) {
+				SpriteList.setDraw(tile.x, tile.y, tile.getSprite());
+			}
+	}
+
+	public static boolean isSeen(int x, int y, int width, int height, int Cx, int Cy, int Cwidth, int Cheight) {
+		int x1 = x;
+		int y1 = y;
+		int x2 = x + width;
+		int y2 = y + height;
+		int cx1 = Cx;
+		int cy1 = Cy;
+		int cx2 = Cx + Cwidth;
+		int cy2 = Cy + Cheight;
+		if (!(x2 < cx1 || y2 < cy1 || x1 > cx2 || y1 > cy2)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}

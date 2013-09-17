@@ -1,0 +1,37 @@
+package com.Fluffeater.semideus.colour;
+
+import java.awt.Color;
+
+public class Screen {
+
+	public static int height;
+	public static int width;
+	public static int[] pixels;
+
+	public Screen(int width, int height) {
+		Screen.width = width;
+		Screen.height = height;
+
+		pixels = new int[width * height];
+
+	}
+
+	public void clear() {
+		for (int i = 0; i < height * width; i++) {
+			pixels[i] = 0;
+		}
+	}
+
+	public void render() {
+		
+		for(int y = 0; y < height; y++){
+			float v = ColourGenerate.newColour(((float)y)/height);
+			System.out.println(v*360);
+			int c = Color.HSBtoRGB(v,1,1);
+			for(int x = 0; x < width; x++){
+				pixels[x + y * width] = c;
+			}
+		}
+		
+	}
+}

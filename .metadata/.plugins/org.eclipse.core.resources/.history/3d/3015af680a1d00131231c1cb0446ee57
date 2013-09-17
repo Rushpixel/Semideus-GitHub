@@ -1,0 +1,51 @@
+package com.Fluffeater.semideus.Graphics;
+
+import java.util.ArrayList;
+
+public class SpriteList {
+
+	public static ArrayList<SpriteInst> spriteList = new ArrayList<SpriteInst>();
+
+	//private static int spritesRendering = 0;
+
+	public static void clear() {
+
+		/*if (spriteList.size() != spritesRendering) {
+			System.out.println(spriteList.size() + " sprites being rendered");
+			spritesRendering = spriteList.size();
+		}*/
+
+		spriteList.clear();
+
+	}
+
+	public static void setDraw(int x, int y, Sprite sprite) {
+		int size = spriteList.size();
+		for(int i = 0; i < spriteList.size(); i++){
+			if(spriteList.get(i).y > y){
+				spriteList.add(i,new SpriteInst(x, y, sprite));
+				return;
+			}
+		}
+		spriteList.add(new SpriteInst(x, y, sprite));
+		return;
+	}
+
+
+
+	public static int getSize() {
+		return spriteList.size();
+	}
+
+	public static int getX(int i) {
+		return spriteList.get(i).x;
+	}
+
+	public static int getY(int i) {
+		return spriteList.get(i).y;
+	}
+
+	public static Sprite getSprite(int i) {
+		return spriteList.get(i).sprite;
+	}
+}

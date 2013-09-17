@@ -1,0 +1,247 @@
+package com.Fluffeater.Archsia.World;
+
+import java.io.Serializable;
+import java.util.Random;
+
+import com.Fluffeater.Archsia.game;
+import com.Fluffeater.Archsia.Graphics.SpriteSheet;
+import com.Fluffeater.Archsia.Tiles.*;
+
+public class Generate extends TileCode implements Serializable {
+
+	public Tile[][] build(int Mx, int My, SpriteSheet sheet) {
+		Tile[][] map = new Tile[16][16];
+
+		for (int ix = 0; ix < 16; ix++) {
+			for (int iy = 0; iy < 16; iy++) {
+				map[ix][iy] = makeTile(sheet.pixels[ix + iy * 16], Mx + ix * 16, My + iy * 12);
+			}
+		}
+		return map;
+	}
+
+	public SpriteSheet setMap(int type) {
+		if (type == 0) return SpriteSheet.horRoad;
+		if (type == 1) return SpriteSheet.vertRoad;
+		if (type == 2) return SpriteSheet.crossRoad;
+		if (type == 3) return SpriteSheet.topleftRoad;
+		if (type == 4) return SpriteSheet.toprightRoad;
+		if (type == 5) return SpriteSheet.bottomleftRoad;
+		if (type == 6) return SpriteSheet.bottomrightRoad;
+		if (type == 7) return SpriteSheet.topTRoad;
+		if (type == 8) return SpriteSheet.leftTRoad;
+		if (type == 9) return SpriteSheet.bottomTRoad;
+		if (type == 10) return SpriteSheet.rightTRoad;
+		if (type == 11) return SpriteSheet.topdeadRoad;
+		if (type == 12) return SpriteSheet.leftdeadRoad;
+		if (type == 13) return SpriteSheet.bottomdeadRoad;
+		if (type == 14) return SpriteSheet.rightdeadRoad;
+		if (type == 15) return SpriteSheet.courtRoad;
+		return SpriteSheet.crossRoad;
+	}
+	
+	public boolean getTop(int type){
+		if(type == 0) return false; 
+		if(type == 1) return true; 
+		if(type == 2) return true; 
+		if(type == 3) return true; 
+		if(type == 4) return true; 
+		if(type == 5) return false; 
+		if(type == 6) return false; 
+		if(type == 7) return true; 
+		if(type == 8) return true; 
+		if(type == 9) return true; 
+		if(type == 10) return false; 
+		if(type == 11) return true; 
+		if(type == 12) return false; 
+		if(type == 13) return false; 
+		if(type == 14) return false; 
+		return false;
+	}
+	
+	public boolean getLeft(int type){
+		if(type == 0) return true; 
+		if(type == 1) return false; 
+		if(type == 2) return true; 
+		if(type == 3) return true; 
+		if(type == 4) return false; 
+		if(type == 5) return true; 
+		if(type == 6) return false; 
+		if(type == 7) return true; 
+		if(type == 8) return true; 
+		if(type == 9) return true; 
+		if(type == 10) return false; 
+		if(type == 11) return false; 
+		if(type == 12) return true; 
+		if(type == 13) return false; 
+		if(type == 14) return false; 
+		return false;
+	}
+	
+	public boolean getBottom(int type){
+		if(type == 0) return false; 
+		if(type == 1) return true; 
+		if(type == 2) return true; 
+		if(type == 3) return false; 
+		if(type == 4) return false; 
+		if(type == 5) return true; 
+		if(type == 6) return true; 
+		if(type == 7) return false; 
+		if(type == 8) return true; 
+		if(type == 9) return true; 
+		if(type == 10) return true; 
+		if(type == 11) return false; 
+		if(type == 12) return false; 
+		if(type == 13) return true; 
+		if(type == 14) return false; 
+		return false;
+	}
+	
+	public boolean getRight(int type){
+		if(type == 0) return true; 
+		if(type == 1) return false; 
+		if(type == 2) return true; 
+		if(type == 3) return false; 
+		if(type == 4) return true; 
+		if(type == 5) return false; 
+		if(type == 6) return false; 
+		if(type == 7) return true; 
+		if(type == 8) return false; 
+		if(type == 9) return true; 
+		if(type == 10) return true; 
+		if(type == 11) return false; 
+		if(type == 12) return false; 
+		if(type == 13) return false; 
+		if(type == 14) return true; 
+		return false;
+	}
+
+	public void continuemap(int type, int x, int y) {
+		if (type == 0) { // horizontal
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+		}
+		if (type == 1) { // vertical 
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+		}
+		if (type == 2) { // Cross Road
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+		}
+		if (type == 3) { // top left
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+		}
+		if (type == 4) { // top right
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+		}
+		if (type == 5) { // bottom left
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+		}
+		if (type == 6) { // bottom right
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y - 192);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x - 256, y);
+		}
+		if (type == 7) { // top T road
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+		}
+		if (type == 8) { // left T road
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+		}
+		if (type == 9) { // bottom T road
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+			if (!MapList.checkforBlock(x + 256, y)) decideBlocks(false, true, false, false, x + 256, y);
+		}
+		if (type == 10) { // right T road
+			if (!MapList.checkforBlock(x - 256, y)) decideBlocks(false, false, true, false, x - 256, y);
+			if (!MapList.checkforBlock(x, y + 192)) decideBlocks(true, false, false, false, x, y + 192);
+			if (!MapList.checkforBlock(x, y - 192)) decideBlocks(false, false, false, true, x, y - 192);
+		}
+
+	}
+
+	public void decideBlocks(boolean top, boolean left, boolean right, boolean bottom, int x, int y) {
+		Random random = new Random();
+		if (MapList.getBlock(x, y-192).bottom ? true : (MapList.checkforBlock(x, y-192) ? false : random.nextInt(9) == 0)) top = true;
+		if (MapList.getBlock(x-256, y).right ? true : (MapList.checkforBlock(x-256, y) ? false : random.nextInt(9) == 0)) left = true;
+		if (MapList.getBlock(x, y+192).top ? true : (MapList.checkforBlock(x, y+192) ? false : random.nextInt(9) == 0)) right = true;
+		if (MapList.getBlock(x+256, y).left ? true : (MapList.checkforBlock(x+256, y) ? false : random.nextInt(9) == 0)) bottom = true;
+
+		if (!top && left && right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 0));
+			System.out.println("generated 0 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && !left && !right && bottom) {
+			MapList.mapList.add(new Map(x, y, 1));
+			System.out.println("generated 1 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && left && right && bottom) {
+			MapList.mapList.add(new Map(x, y, 2));
+			System.out.println("generated 2 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && left && !right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 3));
+			System.out.println("generated 3 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && !left && right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 4));
+			System.out.println("generated 4 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && left && !right && bottom) {
+			MapList.mapList.add(new Map(x, y, 5));
+			System.out.println("generated 5 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && !left && right && bottom) {
+			MapList.mapList.add(new Map(x, y, 6));
+			System.out.println("generated 6 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && left && right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 7));
+			System.out.println("generated 7 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && left && !right && bottom) {
+			MapList.mapList.add(new Map(x, y, 8));
+			System.out.println("generated 8 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && left && right && bottom) {
+			MapList.mapList.add(new Map(x, y, 9));
+			System.out.println("generated 9 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && !left && right && bottom) {
+			MapList.mapList.add(new Map(x, y, 10));
+			System.out.println("generated 10 at " + (x/256) + ", " + (y/192));
+		}
+		if (top && !left && !right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 11));
+			System.out.println("generated 11 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && left && !right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 12));
+			System.out.println("generated 12 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && !left && !right && bottom) {
+			MapList.mapList.add(new Map(x, y, 13));
+			System.out.println("generated 13 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && !left && right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 14));
+			System.out.println("generated 14 at " + (x/256) + ", " + (y/192));
+		}
+		if (!top && !left && !right && !bottom) {
+			MapList.mapList.add(new Map(x, y, 15));
+			System.out.println("generated 15 at " + (x/256) + ", " + (y/192));
+		}
+
+	}
+
+}

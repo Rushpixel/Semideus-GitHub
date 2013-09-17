@@ -1,0 +1,57 @@
+package com.Fluffeater.semideus.World;
+
+import java.awt.Color;
+import java.util.Random;
+
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Tiles.*;
+
+public class TileCode {
+
+	public int wallColour, treeColour,floorColour;
+
+	private Random random = new Random(MapList.generator.nextInt());
+
+	public TileCode() {
+		generateColours();
+
+	}
+	
+	public void generateColours(){
+		wallColour = Color.HSBtoRGB((random.nextInt(285) + 75) / 360f, 0.53f, 0.58f);
+		treeColour = Color.HSBtoRGB((random.nextInt(100) + 65) / 360f, 0.79f, 0.36f);
+		floorColour = Color.HSBtoRGB((random.nextInt(285) + 75) / 360f, 0.52f, 0.28f);
+	}
+
+	public Tile makeTile(int c, int x, int y) {
+
+		if (c == SpriteSheet.tile.pixels[1 * SpriteSheet.tile.wSIZE]) return new SideWalk(x, y);
+		if (c == SpriteSheet.tile.pixels[2 * SpriteSheet.tile.wSIZE]) return new SideWalkDown(x, y);
+		if (c == SpriteSheet.tile.pixels[3 * SpriteSheet.tile.wSIZE]) return new SideWalkLeft(x, y);
+		if (c == SpriteSheet.tile.pixels[4 * SpriteSheet.tile.wSIZE]) return new SideWalkUp(x, y);
+		if (c == SpriteSheet.tile.pixels[5 * SpriteSheet.tile.wSIZE]) return new SideWalkRight(x, y);
+		if (c == SpriteSheet.tile.pixels[6 * SpriteSheet.tile.wSIZE]) return road(x, y);
+		if (c == SpriteSheet.tile.pixels[7 * SpriteSheet.tile.wSIZE]) return new RoadHor(x, y);
+		if (c == SpriteSheet.tile.pixels[8 * SpriteSheet.tile.wSIZE]) return new RoadVer(x, y);
+		if (c == SpriteSheet.tile.pixels[9 * SpriteSheet.tile.wSIZE]) return new SideWalkPole(x, y);
+		if (c == new Color(52, 75, 8).getRGB()) return new Tree(x, y, treeColour);
+		if (c == new Color(101, 64, 132).getRGB()) return Wall(x, y);
+		if (c == new Color(34, 71, 64).getRGB()) return new FloorBlank(x, y, floorColour);
+
+		return new RoadBlank(x, y);
+	}
+
+	public Tile road(int x, int y) {
+		if (random.nextInt(80) != 0)
+			return new RoadBlank(x, y);
+		else
+			return new RoadMHole(x, y);
+	}
+
+	public Tile Wall(int x, int y) {
+
+		return new WallBlank(x, y, wallColour);
+
+	}
+
+}

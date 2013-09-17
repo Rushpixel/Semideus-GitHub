@@ -1,0 +1,30 @@
+package com.Fluffeater.Archsia.World;
+
+import java.util.Random;
+
+import com.Fluffeater.Archsia.Graphics.SpriteSheet;
+import com.Fluffeater.Archsia.Tiles.*;
+
+public class TileCode {
+	
+	private Random random = new Random();
+
+	public Tile makeTile(int c, int x, int y) {
+		
+		if(c == SpriteSheet.tile.pixels[1*SpriteSheet.tile.wSIZE]) return new SideWalk(x,y);
+		if(c == SpriteSheet.tile.pixels[2*SpriteSheet.tile.wSIZE]) return new SideWalkDown(x, y);
+		if(c == SpriteSheet.tile.pixels[3*SpriteSheet.tile.wSIZE]) return new SideWalkLeft(x,y);
+		if(c == SpriteSheet.tile.pixels[4*SpriteSheet.tile.wSIZE]) return new SideWalkUp(x,y);
+		if(c == SpriteSheet.tile.pixels[5*SpriteSheet.tile.wSIZE]) return new SideWalkRight(x,y);
+		if(c == SpriteSheet.tile.pixels[6*SpriteSheet.tile.wSIZE]) return road(x,y);
+		if(c == SpriteSheet.tile.pixels[7*SpriteSheet.tile.wSIZE]) return new RoadHor(x,y);
+		if(c == SpriteSheet.tile.pixels[8*SpriteSheet.tile.wSIZE]) return new RoadVer(x,y);
+		
+		return new RoadBlank(x, y);
+	}
+	
+	public Tile road(int x, int y){
+		if(random.nextInt(70) != 0) return new RoadBlank(x,y); else return new RoadMHole(x,y);
+	}
+
+}

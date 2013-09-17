@@ -1,0 +1,139 @@
+package com.Fluffeater.semideus;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+
+import com.Fluffeater.semideus.Controls.Control;
+import com.Fluffeater.semideus.Instance.Instance;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Tiles.Tile;
+import com.Fluffeater.semideus.World.Map;
+import com.Fluffeater.semideus.World.MapList;
+
+public class SaveLoad {
+
+	public String file;
+
+	public SaveLoad(String file) {
+		this.file = file;
+	}
+
+	public void Save() {
+		// int[] colorMap = new int[16*16];
+
+		// for(int ix = 0; ix < 16; ix++){
+		// for(int iy = 0; iy < 16; iy++)
+		// colorMap[ix + iy * 16] = Map.tiles[ix][iy].getColour();
+		// }
+
+		// BufferedImage img = new
+		// BufferedImage(16,16,BufferedImage.TYPE_INT_RGB);
+		// for(int iy = 0; iy < 16; iy++){
+		// for(int ix = 0; ix < 16; ix++){
+		// img.setRGB(ix, iy, colorMap[ix + iy * 16]);
+		// }
+		// }
+
+		// Makes buffered image from map (preparation for saving image)
+		File saveFile = new File(file + "/map.png");
+		JFileChooser chooser = new JFileChooser();
+		chooser.setSelectedFile(saveFile);
+
+		// Saves buffered image to a .png file. (for reference)
+		// try{
+		// ImageIO.write(img, "png", saveFile);
+		// }catch (IOException e){
+		// e.printStackTrace();
+		// }
+
+		// Saves map to a .dat file (for loading)
+		try {
+			ObjectOutputStream mapOut = new ObjectOutputStream(new FileOutputStream(file + "/map.dat"));
+			mapOut.writeObject(MapList.mapList);
+			mapOut.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Saves instancet5s to a .dat file (for loading)
+		try {
+			ObjectOutputStream instOut = new ObjectOutputStream(new FileOutputStream(file + "/instance.dat"));
+			instOut.writeObject(InstanceList.instList);
+			instOut.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public void load() {
+
+		// Loads the map.dat into the map array -Note that this doesn't change
+		// the map array's size
+		try {
+			ObjectInputStream mapIn = new ObjectInputStream(new FileInputStream(file + "/map.dat"));
+			MapList.mapList = (ArrayList<Map>) mapIn.readObject();
+			mapIn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Loads the instance.dat into the instance list
+		try {
+			ObjectInputStream instIn = new ObjectInputStream(new FileInputStream(file + "/instance.dat"));
+			InstanceList.instList = (ArrayList<Instance>) instIn.readObject();
+			instIn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void loadControlScheme() throws FileNotFoundException {
+		File file = new File("Saves/controlScheme.txt");
+		Scanner scanner = new Scanner(file);
+
+		Control.C_up = scanner.nextInt();
+		Control.C_down = scanner.nextInt();
+		Control.C_left = scanner.nextInt();
+		Control.C_right = scanner.nextInt();
+		Control.C_lup = scanner.nextInt();
+		Control.C_ldown = scanner.nextInt();
+		Control.C_lleft = scanner.nextInt();
+		Control.C_lright = scanner.nextInt();
+		Control.C_shoot = scanner.nextInt();
+	}
+	
+	public void saveControlScheme() throws IOException{
+		Writer writer = new FileWriter("Saves/controlScheme.txt");
+		
+		writer.write(new Integer(Control.C_up).toString());
+		writer.write(" ");
+		writer.write(new Integer(Control.C_down).toString()); 
+		writer.write(" ");
+		writer.write(new Integer(Control.C_left).toString());  
+		writer.write(" ");
+		writer.write(new Integer(Control.C_right).toString()); 
+		writer.write(" ");
+		writer.write(new Integer(Control.C_lup).toString());   
+		writer.write(" ");
+		writer.write(new Integer(Control.C_ldown).toString()); 
+		writer.write(" ");
+		writer.write(new Integer(Control.C_lleft).toString()); 
+		writer.write(" ");
+		writer.write(new Integer(Control.C_lright).toString());
+		writer.write(" ");
+		writer.write(new Integer(Control.C_shoot).toString()); 
+		
+		writer.close();
+		
+		System.out.println("No control scheme detected; written new one");
+	}
+
+}

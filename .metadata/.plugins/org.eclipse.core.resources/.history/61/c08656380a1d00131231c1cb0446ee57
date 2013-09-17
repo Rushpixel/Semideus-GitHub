@@ -1,0 +1,34 @@
+package src.com.Fluffeater.semideus;
+
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.World.MapList;
+
+/**
+ * Copyright EndoPlasm Gaming ©2013
+ */
+
+public class Camera {
+
+	public static int xp = 0;
+	public static int yp = 0;
+	public static int x = 0;
+	public static int y = 0;
+
+	public static void animate() {
+		if (Game.inGame) {
+			x = InstanceList.instList.get(0).x - Screen.width / 2;
+			y = InstanceList.instList.get(0).y - Screen.height / 2;
+		}else{
+			x = 0;
+			y = 0;
+		}
+		if(x != xp || y != yp){
+			MapList.refresh();
+			xp = x;
+			yp = y;
+		}
+		
+	}
+
+}

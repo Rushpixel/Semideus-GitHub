@@ -1,0 +1,138 @@
+package com.Fluffeater.semideus.colour;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+
+import javax.swing.JFrame;
+
+
+import com.Fluffeater.semideus.colour.Screen;
+
+public class Engine extends Canvas implements Runnable {
+
+	private static final double serialVersionUID = 1.3d;
+	public static int width = 100;
+	public static int height = 256;
+	public static int scale = 2;
+	public static String version = "Pre-alpha" + serialVersionUID;
+	public static int seed = 2312;
+
+	private Thread gamethread;
+	private boolean running = false;
+	private JFrame Frame;
+
+	private Screen screen;
+
+	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+	public Engine() {
+		Dimension size = new Dimension(width * scale, height * scale);
+		setPreferredSize(size);
+
+		screen = new Screen(width, height);
+
+		Frame = new JFrame();
+
+	}
+
+	public synchronized void start() {
+		running = true;
+		gamethread = new Thread(this, "Display");
+		gamethread.start();
+		
+		float j= 1;
+		
+		for(int i = 0; i <= 64; i++){
+			j = j*2;
+		}
+	}
+
+	public synchronized void stop() {
+		try {
+			gamethread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		Engine engine = new Engine();
+
+		engine.Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		engine.Frame.setTitle("Archsia " + version);
+		engine.Frame.setResizable(false);
+		engine.Frame.add(engine);
+		engine.Frame.pack();
+		engine.Frame.setLocationRelativeTo(null);
+		engine.Frame.setVisible(true);
+
+		engine.start();
+
+	}
+
+	public void run() {
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60.0;
+		double differ = 0;
+		int frames = 0;
+		int updates = 0;
+		while (running) {
+			long now = System.nanoTime();
+			differ += (now - lastTime) / ns;
+			lastTime = now;
+			while (differ >= 1) {
+				update();
+				updates++;
+				differ--;
+			}
+
+			// render stuff.
+			render();
+			frames++;
+
+			if (System.currentTimeMillis() - timer > 1000) {
+				this.Frame.setTitle("Archsia " + version + " FPS " + frames + ", UPS " + updates);
+				frames = 0;
+				updates = 0;
+				timer = System.currentTimeMillis();
+			}
+		}
+		stop();
+	}
+
+	public void render() {
+		BufferStrategy Buffer = getBufferStrategy();
+		if (Buffer == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		screen.clear();
+		screen.render();
+
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
+
+		Graphics g = Buffer.getDrawGraphics();
+		draw(g);
+		g.dispose();
+		Buffer.show();
+	}
+
+	public void draw(Graphics g) {
+		g.drawImage(image, 0, 0, width * scale, height * scale, null);
+	}
+
+	public void update() {
+		
+	}
+
+}

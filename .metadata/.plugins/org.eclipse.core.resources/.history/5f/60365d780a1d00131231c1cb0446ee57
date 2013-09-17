@@ -1,0 +1,41 @@
+package com.Fluffeater.semideus.Items;
+
+import com.Fluffeater.semideus.Graphics.Animation;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public abstract class Item {
+
+	public Sprite sprite;
+	public int type;
+	
+	public int weight = 1;
+	
+	public boolean chest = false;
+	public boolean weapon = false;
+	
+	public static Sprite sprites[] = Animation.devideSheet(SpriteSheet.Item, 8, 8, 0,8);
+
+	public Item(int type) {
+		this.type = type;
+		sprite = Sprite.items[type];
+	}
+
+	public static Item newItem(int type) {
+		switch (type) {
+		case 1:
+			return new Jacket(type);
+		case 2 : 
+			return new NullWeapon(type);
+		case 3 :
+			return new Pistol(type);
+		default:
+			return new BlankItem(type);
+		}
+	}
+	
+	public Sprite getSprite(){
+		return sprite;
+	}
+
+}

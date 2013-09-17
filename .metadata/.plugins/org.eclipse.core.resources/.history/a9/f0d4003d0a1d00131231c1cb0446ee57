@@ -1,0 +1,27 @@
+package com.Fluffeater.semideus;
+
+import java.awt.event.KeyEvent;
+
+import com.Fluffeater.semideus.Controls.Keyboard;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Instance.ItemHusk;
+import com.Fluffeater.semideus.Items.*;
+
+public class Inventory {
+	
+	public static int pistolMag = 5;
+	public static int cure = 2;
+	public static int healthpack = 0;
+	
+	public static Weapon[] weapons = new Weapon[] { new Pistol(3), new NullWeapon(2), new NullWeapon(2), new NullWeapon(2), new NullWeapon(2) };
+	
+	public static int currentitem = 0;
+	
+	public static void pickup(Item item, ItemHusk itemhusk){
+		if(item.weapon && Keyboard.keys[KeyEvent.VK_TAB]) {
+			InstanceList.instList.add(new ItemHusk(InstanceList.instList.get(0).x,InstanceList.instList.get(0).y, weapons[currentitem]));
+			weapons[currentitem] = (Weapon) item;
+			InstanceList.instList.remove(itemhusk);
+		}
+	}
+}

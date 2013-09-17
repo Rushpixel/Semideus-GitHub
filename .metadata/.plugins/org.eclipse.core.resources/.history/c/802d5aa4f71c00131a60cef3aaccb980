@@ -1,0 +1,56 @@
+package com.Fluffeater.semideus.Items;
+
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.AI.Movement;
+import com.Fluffeater.semideus.World.Collision;
+import com.Fluffeater.semideus.World.Hitbox;
+
+public abstract class Weapon extends Item {
+
+	public int reload = 0;
+
+	public Weapon(int type) {
+		super(type);
+		weapon = true;
+	}
+
+	public abstract void fire(int x, int y);
+
+	public void update() {
+		if (reload != 0) reload--;
+	}
+
+	public static Hitbox bullet(float aim, float x, float y, Hitbox col, int range) throws NullPointerException{
+		Hitbox closest = null;
+		float closestdis = range;
+		for (int i = 0; i < Collision.HitboxList.size(); i ++) {
+			Hitbox target = Collision.HitboxList.get(i);
+			if (target != col && target.target) {
+				//if(target.target) System.out.println("direction: " + aim);
+				float dir = Math.round(Movement.betweenPoints(x, y, target.x, target.y) + 90) % 360;
+				float dif = aim > dir ? aim - dir : dir - aim;
+				dif = dif > 180 ? 180 - (dif % 180) : dif;
+				//if (target.target) System.out.println("enemy direction: " + dir);
+				//if (target.target) System.out.println("difference: " + dif);
+				float dis = Math.round(Movement.distance(x, y, target.x, target.y));
+				//if (target.target)  System.out.println("Distance: " + dis);
+				if (dif <= 20 && dis < closestdis) {
+					closest = target;
+					closestdis = dis;
+				}
+			}
+		}
+		return closest;
+	}
+	
+	public static boolean bullet(float x, float y, int damage, int power, double dir, String attacker){
+		for(Hitbox hitbox : Collision.HitboxList){
+			if(x > hitbox.x1 && x < hitbox.x2 && y > hitbox.y1 && y < hitbox.y2 && hitbox.bullet){
+				System.out.println("hit");
+				hitbox.hit(damage, power, dir, attacker);
+				return true;
+			}
+		}
+		return false;
+	}
+}

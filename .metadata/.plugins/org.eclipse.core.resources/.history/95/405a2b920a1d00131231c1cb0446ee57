@@ -1,0 +1,98 @@
+package com.Fluffeater.semideus.World;
+
+import java.io.Serializable;
+import java.util.Random;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Tiles.*;
+
+public class Generate extends TileCode implements Serializable {
+
+	public Tile[] build(int Mx, int My, Sprite sheet) {
+		Tile[] map = new Tile[16 * 16];
+
+		for (int ix = 0; ix < 16; ix++) {
+			for (int iy = 0; iy < 16; iy++) {
+				map[ix + iy * 16] = makeTile(sheet.pixels[ix + iy * 16], Mx + ix * 16, My + iy * 12);
+			}
+		}
+		return map;
+	}
+
+	public Sprite setMap(boolean top, boolean left, boolean bottom, boolean right) {
+		if (!top && left && !bottom && right) return chooseCard(SpriteSheet.horRoad);
+		if (top && !left && bottom && !right) return chooseCard(SpriteSheet.vertRoad);
+		if (top && left && bottom && right) return chooseCard(SpriteSheet.crossRoad);
+		if (top && left && !bottom && !right) return chooseCard(SpriteSheet.topleftRoad);
+		if (top && !left && !bottom && right) return chooseCard(SpriteSheet.toprightRoad);
+		if (!top && left && bottom && !right) return chooseCard(SpriteSheet.bottomleftRoad);
+		if (!top && !left && bottom && right) return chooseCard(SpriteSheet.bottomrightRoad);
+		if (top && left && !bottom && right) return chooseCard(SpriteSheet.topTRoad);
+		if (top && left && bottom && !right) return chooseCard(SpriteSheet.leftTRoad);
+		if (!top && left && bottom && right) return chooseCard(SpriteSheet.bottomTRoad);
+		if (top && !left && bottom && right) return chooseCard(SpriteSheet.rightTRoad);
+		if (top && !left && !bottom && !right) return chooseCard(SpriteSheet.topdeadRoad);
+		if (!top && left && !bottom && !right) return chooseCard(SpriteSheet.leftdeadRoad);
+		if (!top && !left && bottom && !right) return chooseCard(SpriteSheet.bottomdeadRoad);
+		if (!top && !left && !bottom && right) return chooseCard(SpriteSheet.rightdeadRoad);
+		if (!top && !left && !bottom && !right) return chooseCard(SpriteSheet.courtRoad);
+		return chooseCard(SpriteSheet.crossRoad);
+	}
+
+	public Sprite chooseCard(Sprite[] sprite) {
+		Random random = new Random();
+		return sprite[random.nextInt(sprite.length)];
+	}
+
+	public void continuemap(int x, int y) {
+		if (!MapList.checkforBlock(x, y - 192)) MapList.mapList.add(new Map(x, y - 192));
+		if (!MapList.checkforBlock(x - 256, y)) MapList.mapList.add(new Map(x - 256, y));
+		if (!MapList.checkforBlock(x, y + 192)) MapList.mapList.add(new Map(x, y + 192));
+		if (!MapList.checkforBlock(x + 256, y)) MapList.mapList.add(new Map(x + 256, y));
+	}
+
+	/*
+	 * public void decideBlocks(int x, int y) {
+	 * 
+	 * boolean top = false; boolean left = false; boolean bottom = false;
+	 * boolean right = false;
+	 * 
+	 * Random random = new Random(MapList.generator.nextLong());
+	 * 
+	 * if (MapList.checkforBlock(x, y - 192) ? MapList.getBlock(x, y -
+	 * 192).bottom : random.nextInt(3) == 0) top = true; if
+	 * (MapList.checkforBlock(x - 256, y) ? MapList.getBlock(x - 256, y).right :
+	 * random.nextInt(3) == 0) left = true; if (MapList.checkforBlock(x, y +
+	 * 192) ? MapList.getBlock(x, y + 192).top : random.nextInt(3) == 0) bottom
+	 * = true; if (MapList.checkforBlock(x + 256, y) ? MapList.getBlock(x + 256,
+	 * y).left : random.nextInt(3) == 0) right = true;
+	 * 
+	 * MapList.mapList.add(new Map(x, y, top, left, bottom, right)); }
+	 */
+
+	public boolean genTop(int x, int y) {
+		Random random = new Random();
+		if ((MapList.checkforBlock(x, y - 192) && MapList.getBlock(x, y - 192).generated) ? MapList.getBlock(x, y - 192).bottom : random.nextInt(3) == 0) return true;
+		return false;
+	}
+
+	public boolean genLeft(int x, int y) {
+		Random random = new Random();
+		if ((MapList.checkforBlock(x - 256, y) && MapList.getBlock(x - 256, y).generated) ? MapList.getBlock(x - 256, y).right : random.nextInt(3) == 0) return true;
+		return false;
+	}
+
+	public boolean genBottom(int x, int y) {
+		Random random = new Random();
+		if ((MapList.checkforBlock(x, y + 192) && MapList.getBlock(x, y + 192).generated) ? MapList.getBlock(x, y + 192).top : random.nextInt(3) == 0) return true;
+		return false;
+	}
+
+	public boolean genRight(int x, int y) {
+		Random random = new Random();
+		if ((MapList.checkforBlock(x + 256, y) && MapList.getBlock(x + 256, y).generated) ? MapList.getBlock(x + 256, y).left : random.nextInt(3) == 0) return true;
+		return false;
+	}
+}

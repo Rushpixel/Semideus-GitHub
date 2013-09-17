@@ -1,0 +1,50 @@
+package com.Fluffeater.semideus.Menu;
+
+import com.Fluffeater.semideus.Controls.Mouse;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+
+public class Button {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	public Sprite on, off;
+	public boolean hovering; 
+	public boolean show = false;
+	public int x1, y1, x2, y2;
+	public boolean hit = false;
+	
+	public Button(Sprite on, Sprite off, int x1, int y1, int x2, int y2){
+		this.on = on;
+		this.off = off;
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;
+	}
+	
+	public void check(){
+		if(Mouse.mousex >= x1 && Mouse.mousex <= x2 && Mouse.mousey >= y1 && Mouse.mousey <= y2){
+			hovering = true;
+			if(Mouse.clicked) hit = true; else hit = false;
+		} else{
+			hovering = false;
+		}
+	}
+	
+	public void render(){
+		if(show){
+			if(hovering)SpriteList.setDraw(x1, y1, on); else SpriteList.setDraw(x1, y1, off);
+		}
+	}
+	
+	public void hide(){
+		show = false;
+	}
+	
+	public void show(){
+		show = true;
+	}
+}

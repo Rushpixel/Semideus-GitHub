@@ -1,0 +1,14 @@
+public class Logic {
+	/*
+	 * Copyright Endoplasm Gaming 2013 Do not distribute
+	 */
+
+	public static void main(String[] args) {
+		boolean a = false;
+		boolean b = false;
+		boolean c = false;
+
+		//System.out.print(!(!(a && b) && !(a && b)));
+		System.out.print(!(a || b) || (b || c));
+	}
+}

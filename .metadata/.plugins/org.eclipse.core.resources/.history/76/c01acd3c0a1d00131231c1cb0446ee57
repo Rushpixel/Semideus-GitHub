@@ -1,0 +1,191 @@
+package com.Fluffeater.semideus;
+
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+
+import com.Fluffeater.semideus.Audio.Audio;
+import com.Fluffeater.semideus.Controls.Control;
+import com.Fluffeater.semideus.Controls.Keyboard;
+import com.Fluffeater.semideus.Controls.Mouse;
+import com.Fluffeater.semideus.Graphics.GUI;
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Graphics.StaticSprites;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Menu.Menu;
+import com.Fluffeater.semideus.colour.MoodLight;
+
+/**
+ * Copyright EndoPlasm Gaming ©2013
+ */
+public class Game extends Canvas implements Runnable {
+
+	private static final double serialVersionUID = 0.024d;
+	public static int width = 360;
+	public static int height = 203;
+	public static int scale = 3;
+	public static String version = "Pre-alpha " + serialVersionUID;
+	public Keyboard key;
+	public Control control;
+	public Mouse mouse;
+	public static InstanceList CI = new InstanceList();
+	public SpriteList spritelist = new SpriteList();
+	public static Audio audio = new Audio();
+	public static Menu menu = new Menu();
+	public static StaticSprites staticsprite = new StaticSprites();
+	public static SaveLoad saveload = new SaveLoad("Saves/File1");
+	public static boolean Paused = false;
+	public static boolean inGame = false;
+
+	private Thread gamethread;
+	public static boolean running = false;
+	private JFrame Frame;
+
+	public static Screen screen;
+
+	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+	public Game() {
+		Dimension size = new Dimension(width * scale, height * scale);
+		setPreferredSize(size);
+
+		screen = new Screen(width, height);
+
+		Frame = new JFrame();
+
+		key = new Keyboard();
+		addKeyListener(key);
+
+		control = new Control();
+		if (new File("Saves/controlScheme").exists()) {
+			try {
+				saveload.loadControlScheme();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				saveload.saveControlScheme();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		mouse = new Mouse();
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
+	}
+
+	public synchronized void start() {
+		running = true;
+		gamethread = new Thread(this, "Display");
+		gamethread.start();
+	}
+
+	public synchronized void stop() {
+		try {
+			gamethread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		Game game = new Game();
+
+		game.Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.Frame.setTitle("NecroSemideus " + version);
+		game.Frame.setResizable(false);
+		game.Frame.add(game);
+		game.Frame.pack();
+		game.Frame.setLocationRelativeTo(null);
+		game.Frame.setVisible(true);
+
+		game.start();
+
+	}
+
+	public void run() {
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double ns = 1000000000.0 / 60.0;
+		double differ = 0;
+		int frames = 0;
+		int updates = 0;
+		while (running) {
+			long now = System.nanoTime();
+			differ += (now - lastTime) / ns;
+			lastTime = now;
+			while (differ >= 1) {
+				update();
+				updates++;
+				differ--;
+			}
+
+			// render stuff.
+			render();
+			frames++;
+
+			if (System.currentTimeMillis() - timer > 1000) {
+				this.Frame.setTitle("NecroSemideus " + version + " FPS " + frames + ", UPS " + updates);
+				frames = 0;
+				updates = 0;
+				timer = System.currentTimeMillis();
+			}
+		}
+		stop();
+		this.Frame.dispose();
+	}
+
+	public void render() {
+		BufferStrategy Buffer = getBufferStrategy();
+		if (Buffer == null) {
+			createBufferStrategy(3);
+			return;
+		}
+
+		screen.clear();
+		screen.render();
+
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = Screen.pixels[i];
+		}
+
+		Graphics g = Buffer.getDrawGraphics();
+		draw(g);
+		g.dispose();
+		Buffer.show();
+	}
+
+	public void draw(Graphics g) {
+		g.drawImage(image, 0, 0, width * scale, height * scale, null);
+	}
+
+	public void update() {
+
+		key.update();
+		GUI.update();
+
+		if (!inGame) Menu.update();
+
+		if (!Paused && inGame) {
+			MoodLight.update();
+			Camera.animate();
+			InstanceList.update();
+		}
+	}
+
+}

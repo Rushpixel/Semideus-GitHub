@@ -1,0 +1,85 @@
+package com.Fluffeater.Archsia.World;
+
+import java.io.Serializable;
+
+import com.Fluffeater.Archsia.Camera;
+import com.Fluffeater.Archsia.Graphics.SpriteList;
+import com.Fluffeater.Archsia.Graphics.SpriteSheet;
+import com.Fluffeater.Archsia.Graphics.screen;
+import com.Fluffeater.Archsia.Tiles.Tile;
+
+public class Map implements Serializable {
+
+	public Tile[][] tiles;
+	public int x, y;
+	public boolean generated = false;
+	public boolean loaded = false;
+	public SpriteSheet sheet;
+	public int type;
+	
+	// type 0 = horizontal
+	// type 1 = vertical
+	// type 2 = cross road
+	// type 3 = top-left corner
+	// type 4 = top-right corner
+	// type 5 = bottom-left corner
+	// type 6 = bottom-right corner
+	// type 7 = top T intersect
+	// type 8 = left T intersect
+	// type 9 = bottom T intersect
+	// type 10 = right T intersect
+	// type 11 = top dead end
+	// type 12 = left dead end
+	// type 13 = bottom dead end
+	// type 14 = right dead end
+	// type 15 = courtyard
+	
+	public boolean top, left, bottom, right;
+
+	public Generate generate = new Generate();
+
+	public Map(int x, int y, int type) {
+		this.x = x;
+		this.y = y;
+		this.type = type;
+		sheet = generate.setMap(type);
+		top = generate.getTop(type);
+		left = generate.getLeft(type);
+		bottom = generate.getBottom(type);
+		right = generate.getRight(type);
+		
+	}
+
+	public void render() {
+		
+		boolean seen = isSeen(x, y, 256, 192, Camera.x, Camera.y, screen.width, screen.height);
+		
+		if (generated && loaded) {
+			for (int iy = 0; iy < 16; iy++) {
+				for (int ix = 0; ix < 16; ix++) {
+					SpriteList.setDraw(tiles[ix][iy].x, tiles[ix][iy].y, tiles[ix][iy].sprite);
+				}
+			}
+			if (!seen) loaded = false;
+		} else {
+			if (seen) {
+				if (!generated) {
+					System.out.println("generating from "  + x + ", " + y + ", type " + type);
+					tiles = generate.build(x, y, sheet);
+					generate.continuemap( top,left,bottom,right, x, y);
+					generated = true;
+					System.out.println(""+top+left+bottom+right);
+				}
+				loaded = true;
+			}
+		}
+	}
+
+	public boolean isSeen(int x, int y, int width, int height, int Cx, int Cy, int Cwidth, int Cheight) {
+		if ((x >= Cx && x <= Cx + Cwidth && y >= Cy && y <= Cy + Cheight) || (x + width >= Cx && x + width <= Cx + Cwidth && y >= Cy && y <= Cy + Cheight) || (x + width >= Cx && x + width <= Cx + Cwidth && y + height >= Cy && y + height <= Cy + Cheight) || (x >= Cx && x <= Cx + Cwidth && y + height >= Cy && y + height <= Cy + Cheight)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
