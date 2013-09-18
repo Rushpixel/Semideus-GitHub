@@ -1,0 +1,35 @@
+package com.Fluffeater.semideus.Instance.Particle;
+/*package com.Fluffeater.semideus.Instance.Particle;
+
+import java.util.ArrayList;
+
+import com.Fluffeater.semideus.Camera;
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.SpriteList;
+import com.Fluffeater.semideus.Instance.Instance;
+
+public abstract class PartList extends Instance{
+	
+	public ArrayList<Particle> units = new ArrayList<Particle>();
+
+	public PartList(int x, int y) {
+		super(x,y);
+	}
+	
+	public void update(){
+		for(int i = 0; i < units.size(); i++){
+			units.get(i).update();
+		}
+	}
+	
+	public void remove(int i){
+		units.remove(i);
+	}
+	
+	public void draw(){
+		for(int i = 0; i < units.size(); i++){
+			units.get(i).draw();
+		}
+	}
+
+}*/

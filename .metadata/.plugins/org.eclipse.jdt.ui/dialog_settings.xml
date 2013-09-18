@@ -60,17 +60,17 @@
 		<item value="600" key="width"/>
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 0.203.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
-		<item value="Game (1) - Semideus" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 0.024.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="Game (2) - Semideus" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="/Users/BirdLab2/Desktop/workspace" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="2" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 0.024.jar"/>
 			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 0.203.jar"/>
 			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 0.202.jar"/>
 			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 1.3.jar"/>
 			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 1-2.jar"/>
-			<item value="/Users/BirdLab2/Desktop/Archsia stages/Archsia pre-alpha 1-1.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
 			<item value=".xml"/>
@@ -95,13 +95,9 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
-	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="true" key="renameSubpackages"/>
-		<item value="*" key="patterns"/>
-		<item value="false" key="updateQualifiedNames"/>
-		<item value="1" key="updateSimilarElementsMatchStrategy"/>
-		<item value="false" key="updateTextualMatches"/>
-		<item value="false" key="updateSimilarElements"/>
+	<section name="NewClassWizardPage">
+		<item value="false" key="create_constructor"/>
+		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="RenameInformationPopup">
 	</section>
@@ -110,6 +106,14 @@
 		<item value="true" key="SearchInProjects"/>
 		<item value="true" key="SearchInAppLibs"/>
 		<item value="true" key="SearchInSources"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="true" key="renameSubpackages"/>
+		<item value="*" key="patterns"/>
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+		<item value="false" key="updateSimilarElements"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.Fluffeater.Archsia.Creature.Animated"/>
-<fullyQualifiedTypeName name="com.Fluffeater.Archsia.Tiles.Tile"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
-<fullyQualifiedTypeName name="com.Fluffeater.Archsia.World.Map"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="com.Fluffeater.Archsia.game"/>
@@ -23,15 +19,12 @@
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Controls.Control"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.SaveLoad"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.StaticSprites"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.colour.MoodLight"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.World.InstHitbox"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Particle.BloodSplatter"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Instance"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Particle.Blood"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.AI.Movement"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Controls.Mouse"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.NewGame"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.World.Collision"/>
@@ -40,24 +33,31 @@
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.InstanceList"/>
 <fullyQualifiedTypeName name="java.awt.event.WindowEvent"/>
 <fullyQualifiedTypeName name="java.awt.Toolkit"/>
-<fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Particle.Spark"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Menu.TitleSign"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Menu.Menu"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Animation"/>
-<fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Bullet_Pistol"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Particle.BulletCase"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Items.Weapon"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.World.Hitbox"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Audio.Audio"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Sprite"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.SpriteSheet"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.SpriteList"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Menu.Options"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Menu.Pause"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.Game"/>
-<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Screen"/>
 <fullyQualifiedTypeName name="com.Fluffeater.semideus.Camera"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.GameTracker"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.AI.Movement"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Sprite"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Animation"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Instance.Crossheir"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.Screen"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Graphics.SpriteSheet"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Menu.Death"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.Game"/>
+<fullyQualifiedTypeName name="com.Fluffeater.semideus.ManageGame"/>
 </qualifiedTypeNameHistroy>

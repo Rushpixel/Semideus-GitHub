@@ -1,0 +1,44 @@
+package com.Fluffeater.semideus.Controls;
+
+import java.awt.event.KeyEvent;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Inventory;
+import com.Fluffeater.semideus.Player;
+import com.Fluffeater.semideus.AI.Movement;
+import com.Fluffeater.semideus.Instance.InstanceList;
+
+public class Control {
+	/*
+	 * Copyright Endoplasm Gaming 2013 Do not distribute
+	 */
+
+	// Default control config
+	public static int C_left = KeyEvent.VK_A;
+	public static int C_up = KeyEvent.VK_W;
+	public static int C_right = KeyEvent.VK_D;
+	public static int C_down = KeyEvent.VK_S;
+	public static int C_lleft = KeyEvent.VK_LEFT;
+	public static int C_lup = KeyEvent.VK_UP;
+	public static int C_ldown = KeyEvent.VK_DOWN;
+	public static int C_lright = KeyEvent.VK_RIGHT;
+	public static int C_shoot = KeyEvent.VK_SPACE;
+
+	public Control() {
+		
+	}
+
+	public static void update() {
+		if (Keyboard.keys[C_shoot]) {
+			Inventory.weapons[0].fire(InstanceList.instList.get(0).x, InstanceList.instList.get(0).y, ((Player.aim / 8d * 360d) + 270) % 360);
+		}
+		if(Mouse.clicked){
+			double direction = Movement.betweenPoints(InstanceList.instList.get(0).x, InstanceList.instList.get(0).y, Mouse.mousex, Mouse.mousey + 27);
+			Inventory.weapons[0].fire(InstanceList.instList.get(0).x, InstanceList.instList.get(0).y, direction);
+		}
+		
+		if(Game.Dead)for(boolean b: Keyboard.keys){
+			if(b) Game.Dead = false;
+		}
+	}
+}

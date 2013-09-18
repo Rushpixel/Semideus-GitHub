@@ -1,0 +1,38 @@
+package com.Fluffeater.semideus;
+
+public class GameTracker {
+	/*
+	 * Copyright Endoplasm Gaming 2013 Do not distribute
+	 */
+
+	public static int frequency = 50;
+	public static float difficulty = 0;
+	public static int generatedMaps = 0;
+	public static int kills = 0;
+
+	public GameTracker() {
+		Restart();
+	}
+
+	public static void Restart() {
+		frequency = 50;
+		generatedMaps = 1;
+		kills = 0;
+	}
+
+	public static void reportKill() {
+		kills++;
+		refresh();
+	}
+
+	public static void reportMap() {
+		generatedMaps++;
+		refresh();
+	}
+
+	public static void refresh() {
+		difficulty = (generatedMaps * 0.05f) - (kills * 0.01f);
+		frequency = (int) (50 - difficulty);
+		if(frequency < 5) frequency = 5;
+	}
+}

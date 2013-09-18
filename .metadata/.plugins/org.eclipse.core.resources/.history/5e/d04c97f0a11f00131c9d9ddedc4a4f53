@@ -1,0 +1,86 @@
+package com.Fluffeater.semideus.Graphics;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.Serializable;
+
+import javax.imageio.ImageIO;
+
+public class SpriteSheet implements Serializable {
+
+	private String path;
+	public final int wSIZE, hSIZE;
+	public int[] pixels;
+
+	// Sprite sheets:
+	public static SpriteSheet tile = new SpriteSheet("/tiles1.png", 160, 160);
+	public static SpriteSheet playerhead = new SpriteSheet("/player_head.png", 128, 128);
+	public static SpriteSheet playerchest = new SpriteSheet("/player_chest.png", 128, 128);
+	public static SpriteSheet playerlegs = new SpriteSheet("/player_legs.png", 144, 144);
+	public static SpriteSheet pauseScreen = new SpriteSheet("/Pause.png", 320, 180);
+	public static SpriteSheet Zombie1 = new SpriteSheet("/zombie1.png", 128, 128);
+	public static SpriteSheet Loading = new SpriteSheet("/title 1.png", 6480, 203);
+	public static SpriteSheet Menu1 = new SpriteSheet("/Menu.png", 360, 203);
+	public static SpriteSheet Options1 = new SpriteSheet("/Options.png", 200, 150);
+	public static SpriteSheet Sign = new SpriteSheet("/sign.png", 194, 50);
+	public static SpriteSheet Buttons = new SpriteSheet("/buttons.png", 320, 6);
+	public static SpriteSheet Item = new SpriteSheet("/Items.png", 128, 128);
+	public static SpriteSheet heart = new SpriteSheet("/heart.png", 40, 10);
+	public static SpriteSheet blood = new SpriteSheet("/blood.png", 48, 12);
+
+	// Map template spritesheets:
+	public static SpriteSheet horRoads = new SpriteSheet("/maps/horRoad.png", 32, 16);
+	public static SpriteSheet vertRoads = new SpriteSheet("/maps/vertRoad.png", 32, 16);
+	public static SpriteSheet crossRoads = new SpriteSheet("/maps/crossRoad.png", 32, 16);
+	public static SpriteSheet topleftRoads = new SpriteSheet("/maps/topleftRoad.png", 32, 16);
+	public static SpriteSheet toprightRoads = new SpriteSheet("/maps/toprightRoad.png", 32, 16);
+	public static SpriteSheet bottomleftRoads = new SpriteSheet("/maps/bottomleftRoad.png", 32, 16);
+	public static SpriteSheet bottomrightRoads = new SpriteSheet("/maps/bottomrightRoad.png", 32, 16);
+	public static SpriteSheet topTRoads = new SpriteSheet("/maps/topTRoad.png", 32, 16);
+	public static SpriteSheet leftTRoads = new SpriteSheet("/maps/leftTRoad.png", 32, 16);
+	public static SpriteSheet bottomTRoads = new SpriteSheet("/maps/bottomTRoad.png", 32, 16);
+	public static SpriteSheet rightTRoads = new SpriteSheet("/maps/rightTRoad.png", 32, 16);
+	public static SpriteSheet topdeadRoads = new SpriteSheet("/maps/topdeadRoad.png", 32, 16);
+	public static SpriteSheet leftdeadRoads = new SpriteSheet("/maps/leftdeadRoad.png", 32, 16);
+	public static SpriteSheet bottomdeadRoads = new SpriteSheet("/maps/bottomdeadRoad.png", 32, 16);
+	public static SpriteSheet rightdeadRoads = new SpriteSheet("/maps/rightdeadRoad.png", 32, 16);
+	public static SpriteSheet courtRoads = new SpriteSheet("/maps/courtRoad.png", 32, 16);
+
+	// Map template cards:
+	public static Sprite[] horRoad = Animation.devideSheet(horRoads, 16, 16, 0, 0);
+	public static Sprite[] vertRoad = Animation.devideSheet(vertRoads, 16, 16, 0, 0);
+	public static Sprite[] crossRoad = Animation.devideSheet(crossRoads, 16, 16, 0, 0);
+	public static Sprite[] topleftRoad = Animation.devideSheet(topleftRoads, 16, 16, 0, 0);
+	public static Sprite[] toprightRoad = Animation.devideSheet(toprightRoads, 16, 16, 0, 0);
+	public static Sprite[] bottomleftRoad = Animation.devideSheet(bottomleftRoads, 16, 16, 0, 0);
+	public static Sprite[] bottomrightRoad = Animation.devideSheet(bottomrightRoads, 16, 16, 0, 0);
+	public static Sprite[] topTRoad = Animation.devideSheet(topTRoads, 16, 16, 0, 0);
+	public static Sprite[] leftTRoad = Animation.devideSheet(leftTRoads, 16, 16, 0, 0);
+	public static Sprite[] bottomTRoad = Animation.devideSheet(bottomTRoads, 16, 16, 0, 0);
+	public static Sprite[] rightTRoad = Animation.devideSheet(rightTRoads, 16, 16, 0, 0);
+	public static Sprite[] topdeadRoad = Animation.devideSheet(topdeadRoads, 16, 16, 0, 0);
+	public static Sprite[] leftdeadRoad = Animation.devideSheet(leftdeadRoads, 16, 16, 0, 0);
+	public static Sprite[] bottomdeadRoad = Animation.devideSheet(bottomdeadRoads, 16, 16, 0, 0);
+	public static Sprite[] rightdeadRoad = Animation.devideSheet(rightdeadRoads, 16, 16, 0, 0);
+	public static Sprite[] courtRoad = Animation.devideSheet(courtRoads, 16, 16, 0, 0);
+
+	public SpriteSheet(String path, int wsize, int hsize) {
+		this.path = path;
+		this.wSIZE = wsize;
+		this.hSIZE = hsize;
+
+		pixels = new int[wSIZE * hSIZE];
+		load();
+	}
+
+	private void load() {
+		try {
+			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));
+			int w = image.getWidth();
+			int h = image.getHeight();
+			image.getRGB(0, 0, w, h, pixels, 0, w);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

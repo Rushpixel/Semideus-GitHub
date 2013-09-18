@@ -1,0 +1,12 @@
+package com.Fluffeater.semideus.Items;
+
+public class NullWeapon extends Weapon {
+
+	public NullWeapon(int type) {
+		super(type);
+	}
+
+	@Override
+	public void fire(int x, int y) {
+	}
+}

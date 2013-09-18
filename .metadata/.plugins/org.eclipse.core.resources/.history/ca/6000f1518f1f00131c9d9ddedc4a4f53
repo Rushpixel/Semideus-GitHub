@@ -1,0 +1,24 @@
+package com.Fluffeater.semideus.Tiles;
+
+import java.io.Serializable;
+
+import com.Fluffeater.semideus.GameTracker;
+import com.Fluffeater.semideus.Graphics.Sprite;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+import com.Fluffeater.semideus.Instance.InstanceList;
+import com.Fluffeater.semideus.Instance.ItemHusk;
+import com.Fluffeater.semideus.Instance.Zombie1;
+import com.Fluffeater.semideus.Items.Item;
+import com.Fluffeater.semideus.World.MapList;
+
+public class RoadBlank extends StaticTile implements Serializable {
+
+	public RoadBlank(int x, int y) {
+		super(x, y);
+		StaticSpriteVal = 0;
+		mapC = 0x333A8D;
+		if(MapList.generator.nextInt(GameTracker.difficulty) == 0)InstanceList.instList.add(new Zombie1(x,y));
+		if(MapList.generator.nextInt(100) == 0)InstanceList.instList.add(new ItemHusk(x,y,Item.newItem(3)));
+	}
+
+}

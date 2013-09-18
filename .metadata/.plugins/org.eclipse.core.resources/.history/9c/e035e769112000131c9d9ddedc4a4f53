@@ -1,0 +1,24 @@
+package com.Fluffeater.semideus.Menu;
+
+import java.awt.Color;
+import java.util.Random;
+
+import com.Fluffeater.semideus.Game;
+import com.Fluffeater.semideus.Graphics.Screen;
+import com.Fluffeater.semideus.Graphics.SpriteSheet;
+
+public class Death {
+	/* 
+	 * Copyright Endoplasm Gaming 2013
+	 * Do not distribute
+	 */
+	
+	private Random random = new Random();
+	
+	public void render(){
+		for(int i = 0; i < Game.screen.pixels.length; i++){
+			int c = random.nextInt(SpriteSheet.Death.pixels[i]);
+			Game.screen.pixels[i] = new Color(c,c,c).getRGB();
+		}
+	}
+}
